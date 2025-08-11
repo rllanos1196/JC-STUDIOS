@@ -372,3 +372,26 @@ images.forEach((img) => {
   });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+  const whatsappLink = document.getElementById('whatsapp-link');
+  const serviceModal = document.getElementById('serviceModal');
+
+  whatsappLink.addEventListener('click', function(event) {
+    // Evita que el navegador navegue de inmediato
+    event.preventDefault();
+
+    // Crea una instancia del modal para poder cerrarlo programáticamente
+    const modalInstance = bootstrap.Modal.getInstance(serviceModal);
+    if (modalInstance) {
+      modalInstance.hide();
+    }
+
+    // Almacena el destino del enlace
+    const targetSectionId = this.getAttribute('href');
+
+    // Espera a que el modal esté completamente oculto antes de navegar
+    serviceModal.addEventListener('hidden.bs.modal', function() {
+      window.location.href = targetSectionId;
+    }, { once: true });
+  });
+});
