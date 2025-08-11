@@ -297,9 +297,8 @@ body {
   
 }
 #modalImage{
-  /* max-width: 100vw; */
+  max-width: 90vw;
   max-height: 85vh;
-  width: auto;
   object-fit: cover;
   border-radius: 0;
   box-shadow: none;
