@@ -124,7 +124,7 @@ body {
 
 .carousel-caption {
   z-index: 2;
-  top: 50%;
+  top: 70vh;
   transform: translateY(-50%);
   text-align: center;
 }
@@ -198,9 +198,10 @@ body {
 
 /* About Section */
 #nosotros {
-  position: relative; /* Ajusta según la altura de tu navbar */
-  z-index: 10;
-  background: white; /* O el color de fondo que prefieras */
+  position: relative; 
+  z-index: 100;
+  background: white; 
+  padding-top: 4.5rem;
 }
 
 .about-card {
@@ -286,6 +287,23 @@ body {
 }
 
 /* Portfolio Section */
+#portfolioModal{
+  backdrop-filter: blur(8px);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#modalImage{
+  max-width: 100vw;
+  max-height: 85vh;
+  width: auto;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+
 .portfolio {
   background: var(--secondary-color);
   color: white;
@@ -347,6 +365,7 @@ body {
   color: white;
   animation: pulse 2s infinite;
 }
+
 
 /* Contact Section */
 .contact {
