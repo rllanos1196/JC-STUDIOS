@@ -290,7 +290,7 @@ body {
 #portfolioModal{
   backdrop-filter: blur(8px);
   height: 100vh;
-  display: flex;
+  /* display: flex; posible error al momento de publicar la pagina  */
   align-items: center;
   justify-content: center;
 }
