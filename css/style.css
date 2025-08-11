@@ -289,10 +289,12 @@ body {
 /* Portfolio Section */
 #portfolioModal{
   backdrop-filter: blur(8px);
-  height: 100vh;
-  /* display: flex; posible error al momento de publicar la pagina  */
+  max-width: 100vw;
+  max-height: 100vh;
+  /* display: flex;  Posible error en la pagina publicada */
   align-items: center;
   justify-content: center;
+  
 }
 #modalImage{
   max-width: 100vw;
