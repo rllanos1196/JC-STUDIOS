@@ -297,13 +297,13 @@ body {
   
 }
 #modalImage{
-  max-width: 95vw;
+  max-width: 90vw;
   max-height: 85vh;
   object-fit: cover;
   border-radius: 0;
   box-shadow: none;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
 }
 
 
