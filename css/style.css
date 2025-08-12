@@ -107,9 +107,9 @@ body {
   bottom: 0;
   background: linear-gradient(
     45deg,
-    rgba(227, 5, 20, 0.479),
+    rgba(220, 61, 72, 0.235),
     /* rgba(227, 5, 18, 0.7), */
-    rgba(35, 53, 89, 0.7)
+    rgba(69, 90, 132, 0.358)
   );
   z-index: 1;
 }
