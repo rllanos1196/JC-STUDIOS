@@ -108,7 +108,12 @@ body {
   background: linear-gradient(
     45deg,
     rgba(220, 61, 72, 0.235),
+<<<<<<< HEAD
     /* rgba(227, 5, 18, 0.7), */ rgba(69, 90, 132, 0.358)
+=======
+    /* rgba(227, 5, 18, 0.7), */
+    rgba(69, 90, 132, 0.358)
+>>>>>>> 9281c4a3cf73cba403060c6f8420f4f6fe0b0983
   );
   z-index: 1;
 }
@@ -320,8 +325,10 @@ body {
   /* display: flex;  Posible error en la pagina publicada */
   align-items: center;
   justify-content: center;
+  
 }
-#modalImage {
+#modalImage{
+
   max-width: 90vw;
   max-height: 85vh;
   object-fit: cover;
