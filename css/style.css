@@ -212,7 +212,10 @@ body {
   transition: all 0.3s ease;
   margin-bottom: 2rem;
   border: 1px solid rgba(227, 5, 18, 0.1);
+  text-align: justify;
 }
+
+
 
 .about-card:hover {
   transform: translateY(-10px);
