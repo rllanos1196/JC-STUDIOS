@@ -108,12 +108,8 @@ body {
   background: linear-gradient(
     45deg,
     rgba(220, 61, 72, 0.235),
-<<<<<<< HEAD
-    /* rgba(227, 5, 18, 0.7), */ rgba(69, 90, 132, 0.358)
-=======
-    /* rgba(227, 5, 18, 0.7), */
+    /* rgba(227, 5, 18, 0.7), */ 
     rgba(69, 90, 132, 0.358)
->>>>>>> 9281c4a3cf73cba403060c6f8420f4f6fe0b0983
   );
   z-index: 1;
 }
@@ -203,22 +199,6 @@ body {
 /* About Section */
 #nosotros {
   background: white;
-<<<<<<< HEAD
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(227, 5, 18, 0.1);
-  text-align: justify;
-}
-
-
-
-.about-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-=======
   margin-top: 70vh; /* Ajusta el margen para que comience después del carrusel */
   padding: 100px 0;
   /* position: relative;
@@ -226,7 +206,6 @@ body {
   align-items: center;
   background: white;
   padding-top: 4.5rem; */
->>>>>>> refs/remotes/origin/main
 }
 
 .about-icon {
