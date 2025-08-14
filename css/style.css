@@ -231,6 +231,7 @@ body {
   height: auto;
   min-height: 320px;
   margin-bottom: 5dvh;
+  text-align: justify;
 }
 
 .card-header {
