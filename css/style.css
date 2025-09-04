@@ -25,20 +25,6 @@ body {
 }
 
 
-/* .package-card {
-   /* background: linear-gradient(
-    45deg,
-    var(--light-color),
-    var(--primary-color),
-    var(--secondary-color)
-  ); 
-  background-color: var(--light-color);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  overflow: hidden;
-} */
-
 /* Animated Navigation */
 .navbar {
   background: linear-gradient(
@@ -531,9 +517,11 @@ body {
   }
   .carousel-caption {
     bottom: 5%;
-    padding: 0 10px;
+    padding: 20px 10px;
   }
 }
+
+/*POR MEJORAR EL MEDIA PARA 4 TIPOS DE PANTALLA-27-08-25*/
 
 /* Navbar responsive */
 @media (max-width: 991.98px) {
@@ -554,11 +542,171 @@ body {
   }
 
   .navbar-collapse {
-    margin-top: 1rem;
+    margin-top: 0rem;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 1rem;
+    padding-top: 0rem;
+    border-radius: 1%;
+    background: linear-gradient(to bottom, #d100009c, rgba(0, 0, 0, 0.592));/* modificacion del navbar*/
   }
 }
+
+
+/* INICIO DE MODIFICACIONES */
+
+/* ===== RESPONSIVE NAVBAR PARA 4 TIPOS DE PANTALLA ===== */
+
+/* 1. MÓVILES (320px - 767px) */
+@media (max-width: 767.98px) {
+  .navbar-toggler {
+    border-color: white !important;
+    border-width: 2px;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255,1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.5);
+  }
+
+  .navbar-collapse {
+    margin-top: 0.5rem;
+    /* border-top: 1px solid rgba(255, 255, 255, 0.3); */
+    padding-top: 0.5rem;
+    border-radius: 8px;
+    background: linear-gradient(to bottom, #d100009c, rgba(0, 0, 0, 0.7));
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+}
+
+/* 2. TABLETS (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .navbar-toggler {
+    border-color: white !important;
+    border-width: 2px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255,1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+  }
+
+  .navbar-collapse {
+    margin-top: 0.25rem;
+    /* border-top: 1px solid rgba(255, 255, 255, 0.25); */
+    padding-top: 0.25rem;
+    border-radius: 6px;
+    /* background: linear-gradient(to bottom, #d100009c, rgba(0, 0, 0, 0.65)); */
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* 3. LAPTOPS (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439.98px) {
+  .navbar-toggler {
+    border-color: white !important;
+    border-width: 2px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255,1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+  }
+
+  .navbar-collapse {
+    margin-top: 0rem;
+    /* border-top: 1px solid rgba(255, 255, 255, 0.2); */
+    padding-top: 0rem;
+    border-radius: 4px;
+    /* background: linear-gradient(to bottom, #d100009c, rgba(0, 0, 0, 0.592)); */
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+/* 4. COMPUTADORAS DE ESCRITORIO (1440px en adelante) */
+@media (min-width: 1440px) {
+  .navbar-toggler {
+    border-color: white !important;
+    border-width: 3px;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255,1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.4);
+  }
+
+  .navbar-collapse {
+    margin-top: 0rem;
+    /* border-top: 1px solid rgba(255, 255, 255, 0.15); */
+    padding-top: 0rem;
+    border-radius: 2px;
+    /* background: linear-gradient(to bottom, #d100009c, rgba(0, 0, 0, 0.5)); */
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* ===== ESTILOS ADICIONALES PARA MEJOR UX ===== */
+
+/* Transiciones suaves para todos los dispositivos */
+.navbar-toggler,
+.navbar-collapse,
+.navbar-nav .nav-link {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover effects para dispositivos con cursor */
+@media (hover: hover) {
+  .navbar-toggler:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+  }
+  
+  .navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+}
+
+/* FIN DE MODIFICACIONES*/
 
 .service-modal {
   z-index: 1060;
@@ -704,6 +852,119 @@ body {
   }
 }
 
+
+/*INICIO DE MODIFICACIONES MEDIA SERVICE*/
+/* ===== GALERÍA CIRCULAR RESPONSIVE PARA 4 TIPOS DE PANTALLA ===== */
+
+/* 1. MÓVILES (320px - 767px) */
+@media (max-width: 767.98px) {
+  .circular-gallery {
+    height: 200px;
+  }
+
+  .gallery-item {
+    width: 120px;
+    height: 150px;
+    transform-origin: 50% 50% -150px;
+  }
+
+  .gallery-item:nth-child(1) {
+    transform: rotateY(0deg) translateZ(150px) translateX(-50%) translateY(-50%);
+  }
+  .gallery-item:nth-child(2) {
+    transform: rotateY(60deg) translateZ(150px) translateX(-50%) translateY(-50%);
+  }
+  .gallery-item:nth-child(3) {
+    transform: rotateY(120deg) translateZ(150px) translateX(-50%) translateY(-50%);
+  }
+  .gallery-item:nth-child(4) {
+    transform: rotateY(180deg) translateZ(150px) translateX(-50%) translateY(-50%);
+  }
+  .gallery-item:nth-child(5) {
+    transform: rotateY(240deg) translateZ(150px) translateX(-50%) translateY(-50%);
+  }
+  .gallery-item:nth-child(6) {
+    transform: rotateY(300deg) translateZ(150px) translateX(-50%) translateY(-50%);
+  }
+
+  .nav-tabs .nav-link {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+    margin: 0 0.2rem;
+    letter-spacing: 0.5px;
+  }
+
+  .gallery-title {
+    font-size: 0.8rem;
+  }
+
+  .services {
+    min-height: 60vh;
+    padding: 40px 0;
+  }
+}
+
+
+/* ===== MEJORAS ADICIONALES PARA TODOS LOS DISPOSITIVOS ===== */
+
+/* Transiciones suaves para la galería circular */
+.gallery-item {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.circular-gallery {
+  transition: height 0.3s ease-in-out;
+}
+
+/* Animación de rotación suave */
+@keyframes rotate-gallery {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Hover effects para dispositivos con cursor */
+@media (hover: hover) {
+  .gallery-item:hover {
+    transform-style: preserve-3d;
+    filter: brightness(1.1) contrast(1.05);
+  }
+  
+  .nav-tabs .nav-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Optimización para pantallas táctiles */
+@media (pointer: coarse) {
+  .gallery-item {
+    cursor: pointer;
+  }
+  
+  .nav-tabs .nav-link {
+    min-height: 44px; /* Área táctil mínima recomendada */
+  }
+}
+
+/* Mejoras de rendimiento para dispositivos de baja potencia */
+@media (max-width: 767.98px) {
+  .circular-gallery {
+    will-change: transform;
+  }
+  
+  .gallery-item {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+/*FIN DE MODIFICACIONES MEDIA SERVICIOS */
+
+
+
 /* Portfolio Section */
 #portfolioModal {
   backdrop-filter: blur(8px);
@@ -784,6 +1045,131 @@ body {
   font-size: 3rem;
   color: white;
   animation: pulse 2s infinite;
+}
+
+/* Videos Section */
+.videos {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.videos .section-title {
+  color: var(--secondary-color);
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.video-item {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.video-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.video-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.video-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.video-item:hover .video-thumbnail img {
+  transform: scale(1.1);
+}
+
+.play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.video-item:hover .play-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.play-button {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.video-item:hover .play-button {
+  transform: scale(1.2);
+}
+
+.video-content {
+  padding: 1.5rem;
+}
+
+.video-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.video-description {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Video Modal */
+.video-modal .modal-dialog {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.video-modal .modal-content {
+  background: transparent;
+  border: none;
+}
+
+.video-modal .modal-body {
+  padding: 0;
+}
+
+.video-embed {
+  width: 100%;
+  height: 500px;
+  border: none;
+  border-radius: 10px;
 }
 
 /* Modal Styling */

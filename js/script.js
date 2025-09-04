@@ -12,31 +12,22 @@ const serviceData = {
         namePaquete: "Básico",
         price: 150,
         duration: "1 hora",
-        photos: "fotos sin editar",
+        photos: "Fotos sin editar",
         features: [
-          "Fotos del evento sin EDITAR",
-          "Video editado 1 HORA Full HD",
-          // "Entrega digital en alta resolución",
-          // "1 ubicación",
-          // "Galería online por 30 días",
-          // "Soporte por email",
+          "Fotografía de evento sin edición.",
+          "Video de evento 1 hora en Full HD",
         ],
       },
       standard: {
-        namePaquete: "Estándar",
         namePaquete: "Estándar",
         price: 250,
         duration: "2 horas",
         photos: "15 fotos editadas",
         features: [
-          "Sesión pre boda, 15 fotos con retoque PROFESIONAL",
-          "Fotos del evento con retoque",
-          "Video de 1 hora y 30 min. Full HD",
-          "Cuadro para firmas",
-          // "Galería online por 60 días",
-          // "5 fotos impresas 10x15cm",
-          // "Retoque avanzado incluido",
-          // "Soporte telefónico",
+          "Sesión Pre - Boda, 15 fotografías con retoque profesional.",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video de evento - 1 hora y 30 minutos en Full HD.",
+          "Cuadro Foto Firma",
         ],
       },
       premium: {
@@ -45,16 +36,13 @@ const serviceData = {
         duration: "3 horas",
         photos: "25 fotos retoque Profesional",
         features: [
-          "Sesión pre boda, 15 fotos con retoque PROFESIONAL",
-          "Fotos del evento con retoque",
-          "Video de 1 hora y 30 minutos en 4K",
-          "Video highlight de 3 a 5 minutos en 4K",
-          "Cuadro para firmas",
-          "100 Fotos Impresas",
-          // "15 fotos impresas tamaño profesional",
-          // "Retoque artístico personalizado",
-          // "Video behind the scenes",
-          // "Consulta previa gratuita",
+          "Sesión Pre - Boda, 15 fotografías con retoque profesional.",
+          "Fotografía Makeup",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video de evento editado - 1 hora y 30 minutos en 4K.",
+          "Video highlight de 3 a 5 minutos en 4K.",
+          "Cuadro Foto Firma",
+          "100 Fotos Impresas 10x15",
         ],
       },
     },
@@ -67,48 +55,40 @@ const serviceData = {
     hasPackages: true,
     packages: {
       basico: {
-        name: "Básico - Ceremonia",
+        namePaquete: "Básico",
         price: 250,
         duration: "2 horas",
-        photos: "15 fotos editadas",
+        photos: "Fotos sin editar",
         features: [
-          "Sesión Pre Bautizo, 15 fotos con retoque profesional.",
-          "Fotos del evento sin editar",
-          "Video editado 1 hora Full HD",
-          // "Galería online por 60 días",
-          // "Entrega digital en alta resolución",
+          "Forografía de evento sin edición",
+          "Video de evento - 1 hora Full HD.",
         ],
       },
       standard: {
-        name: "Estándar - Ceremonia + Celebración",
+        namePaquete: "Estándar",
         price: 400,
         duration: "4 horas",
-        photos: "20 fotos editadas",
+        photos: "15 fotos editadas",
         features: [
-          "Sesión Pre Bautizo, 20 fotos con retoque profesional.",
-          "Fotos del evento con retoque",
-          "Video editado de 1 hora y 30 minutos Full HD",
-          "Cuadro para firmas",
-          // "Galería online por 90 días",
-          // "Álbum digital de 30 páginas",
-          // "10 fotos impresas 15x20cm",
+          "Sesión Pre - Bautizo, 15 fotografías con retoque profesional.",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video de evento - 1 hora y 30 minutos en Full HD.",
+          "Cuadro Foto Firma",
         ],
       },
       premium: {
-        name: "Premium - Día Completo",
+        namePaquete: "Premium",
         price: 600,
         duration: "6 horas",
-        photos: "25 fotos editadas",
+        photos: "20 fotos editadas",
         features: [
-          "Sesión Pre Bautizo, 25 fotos con retoque profesional.",
-          "Fotos del evento con retoque",
-          "Video editado de 1 hora y 30 minutos en 4K",
-          "Video highlights de 3 a 5 minutos en 4K",
-          "Cuadro para firmas",
-          "100 Fotos Impresas",
-          // "Álbum físico de 40 páginas",
-          // "20 fotos impresas premium",
-          // "Video resumen de 5 minutos",
+          "Sesión Pre - Bautizo, 20 fotos con retoque profesional.",
+          "Fotografía Makeup",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video de evento editado de 1 hora y 30 minutos en 4K.",
+          "Video highlights de 3 a 5 minutos en 4K.",
+          "Cuadro Foto Firma",
+          "100 fotos impresas 10x15.",
         ],
       },
     },
@@ -124,49 +104,37 @@ const serviceData = {
         namePaquete: "Básico",
         price: 150,
         duration: "1 hora",
-        photos: "15 fotos editadas",
+        photos: "Fotos sin editar",
         features: [
-          "Sesión Pre 15 años, 15 fotos con retoque profesional.",
-          "Fotos de evento con retoque",
-          "Video editado de 1 hora Full HD",
-          // "1 ubicación",
-          // "Galería online por 30 días",
-          // "Soporte por email",
+          "Fotografía de evento sin edición.",
+          "Video de evento - 1 hora en Full HD.",
         ],
       },
       standard: {
         namePaquete: "Estándar",
-        namePaquete: "Estándar",
         price: 250,
         duration: "2 horas",
-        photos: "20 fotos editadas",
+        photos: "15 fotos editadas",
         features: [
-          "Sesión Pre 15 años, 20 fotos con retoque profesional.",
-          "Fotos de evento con retoque",
-          "Video editado de 1 hora y 30 minutos Full HD",
-          "Cuadro para firmas",
-          // "Galería online por 60 días",
-          // "5 fotos impresas 10x15cm",
-          // "Retoque avanzado incluido",
-          // "Soporte telefónico",
+          "Sesión Pre - 15 años, 15 fotografías con retoque profesional.",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video de evento - 1 hora y 30 minutos en Full HD.",
+          "Cuadro Foto Firma",
         ],
       },
       premium: {
         namePaquete: "Premium",
         price: 400,
         duration: "3 horas",
-        photos: "25 fotos editadas",
+        photos: "20 fotos editadas",
         features: [
-          "Sesión Pre 15 años, 25 fotos con retoque profesional.",
-          "Fotos de evento con retoque",
-          "Video editado de 1 hora y 30 minutos en 4K",
-          "Video highlight de 3 a 5 minutos en 4K",
-          "Cuadro para firmas",
-          "100 Fotos Impresas",
-          // "15 fotos impresas tamaño profesional",
-          // "Retoque artístico personalizado",
-          // "Video behind the scenes",
-          // "Consulta previa gratuita",
+          "Sesión Pre - 15 años, 20 fotografías con retoque profesional.",
+          "Fotografía Makeup",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video de evento editado - 1 hora y 30 minutos en 4K.",
+          "Video highlight - 3 a 5 minutos en 4K.",
+          "Cuadro Foto Firma",
+          "100 Fotos Impresas 10x15",
         ],
       },
     },
@@ -182,49 +150,35 @@ const serviceData = {
         namePaquete: "Básico",
         price: 150,
         duration: "1 hora",
-        photos: "fotos editadas",
+        photos: "Fotos editadas",
         features: [
-          "Sesión de fotos (pre evento)",
-          "Fotos de evento",
-          "Video",
-          // "1 ubicación",
-          // "Galería online por 30 días",
-          // "Soporte por email",
+          "Fotografía de evento con retoque profesional.",
+          "Video de evento.",
         ],
       },
       standard: {
         namePaquete: "Estándar",
-        namePaquete: "Estándar",
         price: 250,
         duration: "2 horas",
-        photos: "fotos editadas",
+        photos: "Fotos editadas",
         features: [
-          "Sesión de fotos (pre evento)",
-          "Fotos de evento",
-          "Video",
-          "USB + 15 fotos impresas",
-          // "Galería online por 60 días",
-          // "5 fotos impresas 10x15cm",
-          // "Retoque avanzado incluido",
-          // "Soporte telefónico",
+          "Sesión fotográfica con retoque profesional.",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video de evento Full HD.",
+          "USB + 15 fotos impresas 10x15",
         ],
       },
       premium: {
         namePaquete: "Premium",
         price: 400,
         duration: "3 horas",
-        photos: "fotos editadas",
+        photos: "Fotos editadas",
         features: [
-          "Sesión de fotos (pre evento)",
-          "Fotos de evento",
-          "Video",
-          "USB + 15 fotos impresas + Cuadro",
-          // "Galería online por 90 días",
-          // "Álbum físico de 20 páginas",
-          // "15 fotos impresas tamaño profesional",
-          // "Retoque artístico personalizado",
-          // "Video behind the scenes",
-          // "Consulta previa gratuita",
+          "Sesión fotográfica con retoque profesional.",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video de evento Full HD",
+          "USB + 15 fotos impresas 10x15",
+          "Cuadro",
         ],
       },
     },
@@ -237,53 +191,28 @@ const serviceData = {
       "Aniversarios: Capturamos la esencia de vuestro amor con un enfoque romántico y personalizado. Desde una cena íntima hasta una celebración grandiosa, documentamos cada momento especial de vuestro viaje juntos.",
     hasPackages: true,
     packages: {
-      basico: {
-        namePaquete: "Básico",
-        price: 150,
-        duration: "1 hora",
-        photos: "20 fotos editadas",
-        features: [
-          "Sesión de 1 hora",
-          "20 fotos editadas",
-          "Entrega digital en alta resolución",
-          "1 ubicación",
-          "Galería online por 30 días",
-          "Soporte por email",
-        ],
-      },
       standard: {
-        namePaquete: "Estándar",
         namePaquete: "Estándar",
         price: 250,
         duration: "2 horas",
-        photos: "50 fotos editadas",
+        photos: "15 fotos editadas",
         features: [
-          "Sesión de 2 horas",
-          "50 fotos editadas",
-          "Entrega digital en alta resolución",
-          "2 ubicaciones diferentes",
-          "Galería online por 60 días",
-          "5 fotos impresas 10x15cm",
-          "Retoque avanzado incluido",
-          "Soporte telefónico",
+          "Sesión Cumpleaños, 15 fotografías con retoque profesional.",
+          "Fotografìa de evento con retoque de color, luces y sombras.",
+          "Video evento - 1 hora y 30 minutos en Full HD.",
         ],
       },
       premium: {
         namePaquete: "Premium",
         price: 400,
         duration: "3 horas",
-        photos: "100+ fotos editadas",
+        photos: "20 fotos editadas",
         features: [
-          "Sesión de 3 horas",
-          "100+ fotos editadas",
-          "Entrega digital en alta resolución",
-          "3 ubicaciones diferentes",
-          "Galería online por 90 días",
-          "Álbum físico de 20 páginas",
-          "15 fotos impresas tamaño profesional",
-          "Retoque artístico personalizado",
-          "Video behind the scenes",
-          "Consulta previa gratuita",
+          "Sesión Cumpleaños, 20 fotografías con retoque profesional.",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video editado de 1 hora y 30 minutos en Full HD.",
+          "Video highlights - 3 a 5 minutos en Full HD.",
+          "Cuadro Foto Firma",
         ],
       },
     },
@@ -295,57 +224,31 @@ const serviceData = {
       "Eventos Corporativos: Capturamos la profesionalidad y el dinamismo de vuestros eventos empresariales. Desde conferencias hasta lanzamientos de productos, documentamos cada aspecto con un enfoque profesional y elegante.",
     hasPackages: true,
     packages: {
-      basico: {
-        namePaquete: "Básico",
-        price: 150,
-        duration: "1 hora",
-        photos: "20 fotos editadas",
-        features: [
-          "Sesión de 1 hora",
-          "20 fotos editadas",
-          "Entrega digital en alta resolución",
-          "1 ubicación",
-          "Galería online por 30 días",
-          "Soporte por email",
-        ],
-      },
       standard: {
-        namePaquete: "Estándar",
         namePaquete: "Estándar",
         price: 250,
         duration: "2 horas",
-        photos: "50 fotos editadas",
+        photos: "Fotos con retoque profesional",
         features: [
-          "Sesión de 2 horas",
-          "50 fotos editadas",
-          "Entrega digital en alta resolución",
-          "2 ubicaciones diferentes",
-          "Galería online por 60 días",
-          "5 fotos impresas 10x15cm",
-          "Retoque avanzado incluido",
-          "Soporte telefónico",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video de evento - 30 minutos en Full HD.",
         ],
       },
       premium: {
         namePaquete: "Premium",
         price: 400,
         duration: "3 horas",
-        photos: "100+ fotos editadas",
+        photos: "Fotos con retoque profesional",
         features: [
-          "Sesión de 3 horas",
-          "100+ fotos editadas",
-          "Entrega digital en alta resolución",
-          "3 ubicaciones diferentes",
-          "Galería online por 90 días",
-          "Álbum físico de 20 páginas",
-          "15 fotos impresas tamaño profesional",
-          "Retoque artístico personalizado",
-          "Video behind the scenes",
-          "Consulta previa gratuita",
+          "Fotografía de evento con retoque de color, luces y sombras.",
+          "Video editado - 1 hora en Full HD.",
+          "Video highlights - 3 a 5 minutos en Full HD.",
         ],
       },
     },
   },
+
+
   // Sesiones
   cumpleanos: {
     name: "Cumpleaños",
@@ -354,53 +257,30 @@ const serviceData = {
       "Cumpleaños: Capturamos la alegría y la diversión de tu celebración con un enfoque fresco y vibrante. Desde la decoración hasta los momentos más emotivos, documentamos cada detalle de tu día especial.",
     hasPackages: true,
     packages: {
-      // basico: {
-      //   namePaquete: "Básico",
-      //   price: 150,
-      //   duration: "1 hora",
-      //   photos: "15 fotos editadas",
-      //   features: [
-      //     "Sesión de 15 fotos con retoque profesional",
-      //     "Fotos de eventos con retoque",
-      //     "Video editado de 1 hora y 30 minutos Full HD",
-      //     // "1 ubicación",
-      //     // "Galería online por 30 días",
-      //     // "Soporte por email",
-      //   ],
-      // },
+
       standard: {
         namePaquete: "Estándar",
-        namePaquete: "Estándar",
         price: 250,
-        duration: "2 horas",
+        duration: "1 horas",
         photos: "15 fotos editadas",
         features: [
-          "Sesión de 15 fotos con retoque profesional",
-          "Fotos del evento con retoque",
-          "Video editado de 1 hora y 30 minutos Full HD",
-          // "2 ubicaciones diferentes",
-          // "Galería online por 60 días",
-          // "5 fotos impresas 10x15cm",
-          // "Retoque avanzado incluido",
-          // "Soporte telefónico",
+          "1 hora de sesión",
+          "1 outfit",
+          "15 fotos con edición + originales.",
+          "En exteriores o estudio.",
         ],
       },
       premium: {
         namePaquete: "Premium",
         price: 400,
         duration: "3 horas",
-        photos: "15 fotos editadas",
+        photos: "20 fotos editadas",
         features: [
-          "Sesión de 15 fotos con retoque profesional",
-          "Fotos del evento con retoque",
-          "Video editado de 1 hora y 30 minutos Full HD",
-          // "3 ubicaciones diferentes",
-          // "Galería online por 90 días",
-          // "Álbum físico de 20 páginas",
-          // "15 fotos impresas tamaño profesional",
-          // "Retoque artístico personalizado",
-          // "Video behind the scenes",
-          // "Consulta previa gratuita",
+          "1 hora y 30 minutos de sesión.",
+          "Hasta 3 outfits",
+          "20 fotos con edición + originales.",
+          "20 fotos impresas 10x15 cm",
+          "En exteriores o estudio.",
         ],
       },
     },
@@ -412,111 +292,66 @@ const serviceData = {
       "Sesiones Grupales: Capturamos la esencia de tu grupo con un enfoque dinámico y divertido. Desde amigos hasta familias, documentamos cada interacción y emoción en un ambiente relajado y natural.",
     hasPackages: true,
     packages: {
-      basico: {
-        namePaquete: "Básico",
-        price: 150,
-        duration: "1 hora",
-        photos: "20 fotos editadas",
-        features: [
-          "Sesión de 1 hora",
-          "20 fotos editadas",
-          "Entrega digital en alta resolución",
-          "1 ubicación",
-          "Galería online por 30 días",
-          "Soporte por email",
-        ],
-      },
+
       standard: {
-        namePaquete: "Estándar",
         namePaquete: "Estándar",
         price: 250,
         duration: "2 horas",
-        photos: "50 fotos editadas",
+        photos: "15 fotos editadas",
         features: [
-          "Sesión de 2 horas",
-          "50 fotos editadas",
-          "Entrega digital en alta resolución",
-          "2 ubicaciones diferentes",
-          "Galería online por 60 días",
-          "5 fotos impresas 10x15cm",
-          "Retoque avanzado incluido",
-          "Soporte telefónico",
+          "2 a 5 personas",
+          "1 hora de sesión",
+          "1 outfit",
+          "15 fotos con edición + originales.",
+          "En exteriores o estudio.",
         ],
       },
       premium: {
         namePaquete: "Premium",
         price: 400,
         duration: "3 horas",
-        photos: "100+ fotos editadas",
+        photos: "20 fotos editadas",
         features: [
-          "Sesión de 3 horas",
-          "100+ fotos editadas",
-          "Entrega digital en alta resolución",
-          "3 ubicaciones diferentes",
-          "Galería online por 90 días",
-          "Álbum físico de 20 páginas",
-          "15 fotos impresas tamaño profesional",
-          "Retoque artístico personalizado",
-          "Video behind the scenes",
-          "Consulta previa gratuita",
+          "6 a 12 personas",
+          "1 hora y 30 minutos de sesión.",
+          "Hasta 2 outfit",
+          "20 fotos con edición + originales.",
+          "20 fotos impresas 10x15 cm",
+          "En exteriores o estudio.",
         ],
       },
     },
   },
-  profesionales: {
-    name: "Retratos Profesionales",
+  individuales: {
+    name: "Retratos Individuales",
     icon: "fas fa-user-tie",
     description:
-      "Retratos Profesionales: Capturamos tu imagen con un enfoque profesional y elegante. Desde retratos corporativos hasta sesiones de marca personal, documentamos tu esencia con estilo y sofisticación.",
+      "Retratos Individuales: Capturamos tu imagen con un enfoque profesional y elegante. Desde retratos corporativos hasta sesiones de marca personal, documentamos tu esencia con estilo y sofisticación.",
     hasPackages: true,
     packages: {
-      // basico: {
-      //   namePaquete: "Básico",
-      //   price: 150,
-      //   duration: "1 hora",
-      //   photos: "20 fotos editadas",
-      //   features: [
-      //     "Sesión de 1 hora",
-      //     "20 fotos editadas",
-      //     "Entrega digital en alta resolución",
-      //     "1 ubicación",
-      //     "Galería online por 30 días",
-      //     "Soporte por email",
-      //   ],
-      // },
       standard: {
         namePaquete: "Estándar",
-        namePaquete: "Estándar",
         price: 250,
-        duration: "1 hora",
+        duration: "45 minutos",
         photos: "15 fotos editadas",
         features: [
-          "Sesión de 1 hora",
-          "1 solo Outfit",
+          "Sesión de 45 minutos.",
+          "1 Outfit",
           "15 fotos con edición + originales",
-          "Pago 100% el día de la sesión",
-          // "Galería online por 60 días",
-          // "5 fotos impresas 10x15cm",
-          // "Retoque avanzado incluido",
-          // "Soporte telefónico",
+          "En exteriores o estudio.",
         ],
       },
       premium: {
         namePaquete: "Premium",
         price: 400,
-        duration: "1 hora y 30 minutos",
+        duration: "1 hora",
         photos: "20 fotos editadas",
         features: [
-          "Sesión de 1 hora y 30 minutos",
-          "Hasta 3 Oufit",
+          "1 hora de sesión.",
+          "Hasta 3 Oufits",
           "20 fotos con edición + originales",
-          "20 fotos impresas",
-          "Pago 100% el día de la sesión",
-          // "Álbum físico de 20 páginas",
-          // "15 fotos impresas tamaño profesional",
-          // "Retoque artístico personalizado",
-          // "Video behind the scenes",
-          // "Consulta previa gratuita",
+          "20 fotos impresas de 10x15",
+          "En exteriores o estudio.",
         ],
       },
     },
@@ -528,35 +363,16 @@ const serviceData = {
       "Retratos Artísticos: Capturamos tu esencia con un enfoque creativo y único. Desde retratos conceptuales hasta sesiones de moda, documentamos tu personalidad con un estilo artístico y distintivo.",
     hasPackages: true,
     packages: {
-      // basico: {
-      //   namePaquete: "Básico",
-      //   price: 150,
-      //   duration: "1 hora",
-      //   photos: "20 fotos editadas",
-      //   features: [
-      //     "Sesión de 1 hora",
-      //     "20 fotos editadas",
-      //     "Entrega digital en alta resolución",
-      //     "1 ubicación",
-      //     "Galería online por 30 días",
-      //     "Soporte por email",
-      //   ],
-      // },
       standard: {
-        namePaquete: "Estándar",
         namePaquete: "Estándar",
         price: 250,
         duration: "1 hora",
         photos: "15 fotos editadas",
         features: [
           "Sesión de 1 hora",
-          "1 solo Outfit",
+          "1 Outfit",
           "15 fotos con edición + originales",
-          "Pago 100% el día de la sesión",
-          // "Galería online por 60 días",
-          // "5 fotos impresas 10x15cm",
-          // "Retoque avanzado incluido",
-          // "Soporte telefónico",
+          "En exteriores o estudio.",
         ],
       },
       premium: {
@@ -568,13 +384,8 @@ const serviceData = {
           "Sesión de 1 hora y 30 minutos",
           "Hasta 3 Oufit",
           "20 fotos con edición + originales",
-          "20 fotos impresas",
-          "Pago 100% el día de la sesión",
-          // "Álbum físico de 20 páginas",
-          // "15 fotos impresas tamaño profesional",
-          // "Retoque artístico personalizado",
-          // "Video behind the scenes",
-          // "Consulta previa gratuita",
+          "1 fotografía de 30x45 cm.",
+          "En exteriores o estudio.",
         ],
       },
     },
@@ -586,35 +397,15 @@ const serviceData = {
       "Maternidad: Capturamos la belleza y la emoción de la espera con un enfoque cálido y acogedor. Desde sesiones íntimas hasta retratos familiares, documentamos cada momento especial de tu viaje hacia la maternidad.",
     hasPackages: true,
     packages: {
-      // basico: {
-      //   namePaquete: "Básico",
-      //   price: 150,
-      //   duration: "1 hora",
-      //   photos: "20 fotos editadas",
-      //   features: [
-      //     "Sesión de 1 hora",
-      //     "20 fotos editadas",
-      //     "Entrega digital en alta resolución",
-      //     "1 ubicación",
-      //     "Galería online por 30 días",
-      //     "Soporte por email",
-      //   ],
-      // },
       standard: {
-        namePaquete: "Estándar",
         namePaquete: "Estándar",
         price: 250,
         duration: "45 minutos",
         photos: "15 fotos editadas",
         features: [
-          "Sesión de 45 minutos",
+          "1 hora de sesión.",
           "15 fotos con edición + originales",
-          "Pago 100% el día de la sesión",
-          // "2 ubicaciones diferentes",
-          // "Galería online por 60 días",
-          // "5 fotos impresas 10x15cm",
-          // "Retoque avanzado incluido",
-          // "Soporte telefónico",
+          "En exteriores o estudio.",
         ],
       },
       premium: {
@@ -626,13 +417,8 @@ const serviceData = {
           "Sesión de 1 hora",
           "1 vestido",
           "20 fotos con edición + originales",
-          "20 fotos impresas",
-          "Pago el 100% el día de la sesión",
-          // "Álbum físico de 20 páginas",
-          // "15 fotos impresas tamaño profesional",
-          // "Retoque artístico personalizado",
-          // "Video behind the scenes",
-          // "Consulta previa gratuita",
+          "1 fotografía 30x45 cm",
+          "En exteriores o estudio.",
         ],
       },
     },
@@ -644,53 +430,27 @@ const serviceData = {
       "Fotografía de Mascotas: Capturamos la esencia y personalidad de tus animales con un enfoque divertido y creativo. Desde sesiones en estudio hasta aventuras al aire libre, documentamos cada momento especial de tu peludo amigo.",
     hasPackages: true,
     packages: {
-      basico: {
-        namePaquete: "Básico",
-        price: 150,
-        duration: "1 hora",
-        photos: "20 fotos editadas",
-        features: [
-          "Sesión de 1 hora",
-          "20 fotos editadas",
-          "Entrega digital en alta resolución",
-          "1 ubicación",
-          "Galería online por 30 días",
-          "Soporte por email",
-        ],
-      },
       standard: {
         namePaquete: "Estándar",
-        namePaquete: "Estándar",
         price: 250,
-        duration: "2 horas",
-        photos: "50 fotos editadas",
+        duration: "1 horas",
+        photos: "15 fotos editadas",
         features: [
-          "Sesión de 2 horas",
-          "50 fotos editadas",
-          "Entrega digital en alta resolución",
-          "2 ubicaciones diferentes",
-          "Galería online por 60 días",
-          "5 fotos impresas 10x15cm",
-          "Retoque avanzado incluido",
-          "Soporte telefónico",
+          "Sesión de 1 hora",
+          "15 fotos con edición + originales.",
+          "En exteriores.",
         ],
       },
       premium: {
         namePaquete: "Premium",
         price: 400,
-        duration: "3 horas",
-        photos: "100+ fotos editadas",
+        duration: "1 horas",
+        photos: "20 fotos editadas",
         features: [
-          "Sesión de 3 horas",
-          "100+ fotos editadas",
-          "Entrega digital en alta resolución",
-          "3 ubicaciones diferentes",
-          "Galería online por 90 días",
-          "Álbum físico de 20 páginas",
-          "15 fotos impresas tamaño profesional",
-          "Retoque artístico personalizado",
-          "Video behind the scenes",
-          "Consulta previa gratuita",
+          "Sesión de 1 hora y 30 minutos.",
+          "20 fotos con edición + originales.",
+          "1 fotografía de 30x45 cm.",
+          "En exteriores o estudio.",
         ],
       },
     },
@@ -737,7 +497,7 @@ const packageIcons = {
 };
 
 // Función para generar el HTML de cada paquete
-function createPackageHTML(packageData, packageType, index = 0) {
+function createPackageHTML(packageData, packageType, index = 0, serviceName) {
   // Si el nombre del paquete está en el objeto de datos, úsalo. Si no, usa el tipo.
   const packageName = packageData.namePaquete || packageData.name;
 
@@ -759,9 +519,7 @@ function createPackageHTML(packageData, packageType, index = 0) {
                     <i class="${icon} me-3 fs-4"></i>
                     <div class="text-start">
                         <div class="fw-bold fs-5">${packageName}</div>
-                        <small class="text-muted">${packageData.duration} • ${
-    packageData.photos
-  }</small>
+                        <small class="text-muted"> ${packageData.photos}</small>
                     </div>
                 </div>
                 <div class="text-end">
@@ -796,7 +554,7 @@ function createPackageHTML(packageData, packageType, index = 0) {
                         <div class="col-md-4">
                             <div class="package-price-box text-center p-4 bg-white rounded shadow-sm">
                                 <button class="btn btn-${color} w-100 btn-lg mb-2"
-                                        onclick="selectCustomPackage('${packageType}', '${packageName}')">
+                                        onclick="selectCustomPackage('${packageType}', '${packageName}', '${serviceName}')">
                                     <i class="fab fa-whatsapp me-2"></i>
                                     Seleccionar
                                 </button>
@@ -818,11 +576,12 @@ function renderPackages(service) {
   const container = document.getElementById("packages-container");
   let packagesHTML = "";
   let index = 0;
+  let serviceName = service.name;
 
   if (service.hasPackages && service.packages) {
     Object.keys(service.packages).forEach((packageKey) => {
       const packageData = service.packages[packageKey];
-      packagesHTML += createPackageHTML(packageData, packageKey, index);
+      packagesHTML += createPackageHTML(packageData, packageKey, index, serviceName);
       index++;
     });
   }
@@ -853,9 +612,9 @@ function initializeChevronEvents() {
 }
 
 // Función para manejar la selección de paquete
-function selectCustomPackage(packageType, packageName) {
+function selectCustomPackage(packageType, packageName, nameEvent) {
   let price = "";
-  let serviceName = "";
+  let serviceName = nameEvent;
 
   // Buscar el precio y el nombre del servicio en la estructura de datos
   Object.keys(serviceData).forEach((serviceKey) => {
@@ -867,7 +626,7 @@ function selectCustomPackage(packageType, packageName) {
         packageData.name === packageName
       ) {
         price = packageData.price;
-        serviceName = service.name;
+        // serviceName = service.name;
       }
     }
   });
@@ -882,6 +641,28 @@ function selectCustomPackage(packageType, packageName) {
 document.addEventListener("DOMContentLoaded", function () {
   const whatsappLink = document.getElementById("whatsapp-link");
   const serviceModal = document.getElementById("serviceModal");
+
+  // Video Modal functionality
+  const videoItems = document.querySelectorAll(".video-item");
+  const videoModal = new bootstrap.Modal(document.getElementById("videoModal"));
+  const videoEmbed = document.getElementById("videoEmbed");
+
+  videoItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      const videoId = this.dataset.videoId;
+      const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      videoEmbed.src = embedUrl;
+      videoModal.show();
+    });
+  });
+
+  // Clear video when modal is closed
+  document
+    .getElementById("videoModal")
+    .addEventListener("hidden.bs.modal", function () {
+      videoEmbed.src = "";
+    });
+
   //renderPackages();
   if (whatsappLink && serviceModal) {
     whatsappLink.addEventListener("click", function (event) {

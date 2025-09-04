@@ -211,6 +211,18 @@
           <ul class="nav nav-tabs" id="serviceTabs" role="tablist">
             <li class="nav-item" role="presentation">
               <button
+                class="nav-link "
+                id="sesiones-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#sesiones"
+                type="button"
+                role="tab"
+              >
+                <i class="fas fa-camera"></i> Sesiones
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
                 class="nav-link active"
                 id="eventos-tab"
                 data-bs-toggle="tab"
@@ -219,18 +231,6 @@
                 role="tab"
               >
                 <i class="fas fa-heart"></i> Eventos
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="sesiones-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#sesiones"
-                type="button"
-                role="tab"
-              >
-                <i class="fas fa-camera"></i> Sesiones
               </button>
             </li>
           </ul>
@@ -267,9 +267,9 @@
                   </div>
                 </div>
                 <div class="gallery-item" data-service="aniversarios">
-                  <img src="img/evento5.jpg" alt="Aniversarios" />
+                  <img src="img/evento5.jpg" alt="Cumpleaños" />
                   <div class="gallery-overlay">
-                    <h3 class="gallery-title">Aniversarios</h3>
+                    <h3 class="gallery-title">Cumpleaños</h3>
                   </div>
                 </div>
                 <div class="gallery-item" data-service="corporativos">
@@ -304,13 +304,13 @@
                     <h3 class="gallery-title">Grupales</h3>
                   </div>
                 </div>
-                <div class="gallery-item" data-service="profesionales">
+                <div class="gallery-item" data-service="individuales">
                   <img
                     src="img/trabajo11.jpg"
-                    alt="Retratos Profesionales"
+                    alt="Retratos Individuales"
                   />
                   <div class="gallery-overlay">
-                    <h3 class="gallery-title">Profesionales</h3>
+                    <h3 class="gallery-title">Individuales</h3>
                   </div>
                 </div>
                 <div class="gallery-item" data-service="artisticos">
@@ -613,6 +613,97 @@
               class="img-fluid"
               style="border-radius: 15px"
             />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Videos Section -->
+    <section id="videos" class="section videos">
+      <div class="container">
+        <h2 class="section-title">Nuestros Videos</h2>
+        <div class="video-grid">
+          <div class="video-item" data-video-id="2udhIhZM1ug">
+            <div class="video-thumbnail">
+              <img src="https://img.youtube.com/vi/2udhIhZM1ug/maxresdefault.jpg" alt="Video Promocional JC Studios">
+              <div class="play-overlay">
+                <div class="play-button">
+                  <i class="fas fa-play"></i>
+                </div>
+              </div>
+            </div>
+            <div class="video-content">
+              <h3 class="video-title">Video Promocional JC Studios</h3>
+              <p class="video-description">Conoce nuestro trabajo y la pasión que ponemos en cada proyecto fotográfico.</p>
+            </div>
+          </div>
+
+          <div class="video-item" data-video-id="iTJV4btlumU">
+            <div class="video-thumbnail">
+              <img src="https://img.youtube.com/vi/iTJV4btlumU/maxresdefault.jpg" alt="Sesión de Bodas Cinematográfica">
+              <div class="play-overlay">
+                <div class="play-button">
+                  <i class="fas fa-play"></i>
+                </div>
+              </div>
+            </div>
+            <div class="video-content">
+              <h3 class="video-title">Sesión de Bodas Cinematográfica</h3>
+              <p class="video-description">Un día especial capturado con el estilo cinematográfico único de JC Studios.</p>
+            </div>
+          </div>
+
+          <div class="video-item" data-video-id="N4vXf44Zk-4">
+            <div class="video-thumbnail">
+              <img src="https://img.youtube.com/vi/N4vXf44Zk-4/maxresdefault.jpg" alt="Evento Corporativo Profesional">
+              <div class="play-overlay">
+                <div class="play-button">
+                  <i class="fas fa-play"></i>
+                </div>
+              </div>
+            </div>
+            <div class="video-content">
+              <h3 class="video-title">Evento Corporativo Profesional</h3>
+              <p class="video-description">Cobertura completa de eventos empresariales con la máxima calidad profesional.</p>
+            </div>
+          </div>
+
+          <div class="video-item" data-video-id="OwRREXjF6FM">
+            <div class="video-thumbnail">
+              <img src="https://img.youtube.com/vi/OwRREXjF6FM/maxresdefault.jpg" alt="Sesión Artística Creativa">
+              <div class="play-overlay">
+                <div class="play-button">
+                  <i class="fas fa-play"></i>
+                </div>
+              </div>
+            </div>
+            <div class="video-content">
+              <h3 class="video-title">Sesión Artística Creativa</h3>
+              <p class="video-description">Trabajo creativo que muestra nuestro lado más artístico y experimental.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+       <!-- Video Modal -->
+    <div class="modal fade video-modal" id="videoModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <iframe
+              id="videoEmbed"
+              class="video-embed"
+              src=""
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
       </div>
