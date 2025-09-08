@@ -264,7 +264,7 @@ const serviceData = {
         duration: "1 horas",
         photos: "15 fotos editadas",
         features: [
-          "1 hora de sesión",
+          "45 minutos de sesión",
           "1 outfit",
           "15 fotos con edición + originales.",
           "En exteriores o estudio.",
@@ -276,7 +276,7 @@ const serviceData = {
         duration: "3 horas",
         photos: "20 fotos editadas",
         features: [
-          "1 hora y 30 minutos de sesión.",
+          "1 hora de sesión.",
           "Hasta 3 outfits",
           "20 fotos con edición + originales.",
           "20 fotos impresas 10x15 cm",
@@ -366,10 +366,10 @@ const serviceData = {
       standard: {
         namePaquete: "Estándar",
         price: 250,
-        duration: "1 hora",
+        duration: "45 minutos",
         photos: "15 fotos editadas",
         features: [
-          "Sesión de 1 hora",
+          "Sesión de 45 minutos",
           "1 Outfit",
           "15 fotos con edición + originales",
           "En exteriores o estudio.",
@@ -378,10 +378,10 @@ const serviceData = {
       premium: {
         namePaquete: "Premium",
         price: 400,
-        duration: "1 hora y 30 minutos",
+        duration: "1 hora",
         photos: "20 fotos editadas",
         features: [
-          "Sesión de 1 hora y 30 minutos",
+          "Sesión de 1 hora",
           "Hasta 3 Oufit",
           "20 fotos con edición + originales",
           "1 fotografía de 30x45 cm.",
@@ -403,7 +403,7 @@ const serviceData = {
         duration: "45 minutos",
         photos: "15 fotos editadas",
         features: [
-          "1 hora de sesión.",
+          "Sesión de 45 minutos.",
           "15 fotos con edición + originales",
           "En exteriores o estudio.",
         ],
@@ -433,7 +433,7 @@ const serviceData = {
       standard: {
         namePaquete: "Estándar",
         price: 250,
-        duration: "1 horas",
+        duration: "45 minutos",
         photos: "15 fotos editadas",
         features: [
           "Sesión de 1 hora",
@@ -447,7 +447,7 @@ const serviceData = {
         duration: "1 horas",
         photos: "20 fotos editadas",
         features: [
-          "Sesión de 1 hora y 30 minutos.",
+          "Sesión de 1 hora.",
           "20 fotos con edición + originales.",
           "1 fotografía de 30x45 cm.",
           "En exteriores o estudio.",
