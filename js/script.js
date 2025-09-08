@@ -436,7 +436,7 @@ const serviceData = {
         duration: "45 minutos",
         photos: "15 fotos editadas",
         features: [
-          "Sesión de 1 hora",
+          "Sesión de 45 minutos.",
           "15 fotos con edición + originales.",
           "En exteriores.",
         ],
