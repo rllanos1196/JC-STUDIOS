@@ -18,15 +18,28 @@
           <div v-if="step === 'gallery'" class="gallery-step">
             <p class="gallery-intro">{{ service?.description }}</p>
 
-            <div class="gallery-grid">
+            <div v-if="photos.length === 0" class="gallery-empty">
+              <i class="fas fa-camera-retro"></i>
+              <p>Estamos preparando la galería de este servicio.</p>
+            </div>
+
+            <div v-else class="gallery-grid">
               <div
-                v-for="(img, index) in service?.gallery"
-                :key="index"
+                v-for="(photo, index) in photos"
+                :key="photo.key"
                 class="gallery-photo"
-                :style="{ animationDelay: index * 0.08 + 's' }"
+                :style="{ animationDelay: Math.min(index, 11) * 0.06 + 's' }"
                 @click="openLightbox(index)"
               >
-                <img :src="img" :alt="service?.name + ' ' + (index + 1)" loading="lazy" />
+                <img
+                  :src="photo.thumb"
+                  :alt="service?.name + ' - foto ' + (index + 1)"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="400"
+                  @error="onImgError"
+                />
                 <div class="photo-hover">
                   <i class="fas fa-expand"></i>
                 </div>
@@ -48,6 +61,41 @@
 
             <h3 class="plans-title">Elige tu Paquete</h3>
             <p class="plans-subtitle">Selecciona el plan perfecto para tu {{ service?.name }}</p>
+
+            <div class="date-picker">
+              <label class="date-label" for="fecha-tentativa">
+                <i class="fas fa-calendar-day"></i>
+                ¿Para qué fecha lo necesitas?
+                <span class="date-optional">opcional</span>
+              </label>
+              <div class="date-controls">
+                <input
+                  id="fecha-tentativa"
+                  v-model="fechaTentativa"
+                  type="date"
+                  class="date-input"
+                  :min="fechaMinima"
+                />
+                <button
+                  v-if="fechaTentativa"
+                  type="button"
+                  class="date-clear"
+                  title="Quitar fecha"
+                  @click="fechaTentativa = ''"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <p class="date-preview">
+                <template v-if="fechaTentativa">
+                  <i class="fas fa-check-circle"></i>
+                  Enviaremos tu solicitud para el <strong>{{ fechaLarga }}</strong>
+                </template>
+                <template v-else>
+                  Si aún no la tienes, no hay problema: la coordinamos por WhatsApp.
+                </template>
+              </p>
+            </div>
 
             <div class="plans-grid">
               <div
@@ -73,8 +121,8 @@
                   </ul>
                 </div>
                 <div class="plan-footer">
-                  <button class="btn btn-plan" @click="cotizar(key, pkg.namePaquete)">
-                    <i class="fab fa-whatsapp me-2"></i>Cotizar Ahora
+                  <button class="btn btn-plan" @click="reservar(pkg)">
+                    <i class="fab fa-whatsapp me-2"></i>Reservar por WhatsApp
                   </button>
                 </div>
               </div>
@@ -86,24 +134,36 @@
     </div>
 
     <!-- Lightbox -->
-    <div v-if="lightboxOpen" class="lightbox" @click.self="closeLightbox">
+    <div
+      v-if="lightboxOpen"
+      class="lightbox"
+      @click.self="closeLightbox"
+      @touchstart.passive="onTouchStart"
+      @touchend.passive="onTouchEnd"
+    >
       <button class="lightbox-close" @click="closeLightbox">
         <i class="fas fa-times"></i>
       </button>
       <button class="lightbox-prev" @click="prevPhoto">
         <i class="fas fa-chevron-left"></i>
       </button>
-      <img :src="service?.gallery[lightboxIndex]" :alt="service?.name" class="lightbox-img" />
+      <img
+        :src="photos[lightboxIndex]?.full"
+        :alt="service?.name + ' - foto ' + (lightboxIndex + 1)"
+        class="lightbox-img"
+        decoding="async"
+        @error="onImgError"
+      />
       <button class="lightbox-next" @click="nextPhoto">
         <i class="fas fa-chevron-right"></i>
       </button>
-      <div class="lightbox-counter">{{ lightboxIndex + 1 }} / {{ service?.gallery?.length }}</div>
+      <div class="lightbox-counter">{{ lightboxIndex + 1 }} / {{ photos.length }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 const modalRef = ref(null)
@@ -113,6 +173,52 @@ let bsModal = null
 
 const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
+
+/* --- Fecha tentativa de la reserva ------------------------------------ */
+const fechaTentativa = ref('')
+
+/** Hoy en formato YYYY-MM-DD (hora local), para bloquear fechas pasadas. */
+const fechaMinima = computed(() => {
+  const now = new Date()
+  const offset = now.getTimezoneOffset() * 60000
+  return new Date(now.getTime() - offset).toISOString().slice(0, 10)
+})
+
+/**
+ * Convierte 2026-12-12 en "viernes 12 de diciembre de 2026".
+ * La fecha se arma con partes locales a proposito: new Date('2026-12-12') se
+ * interpreta como UTC y en Lima (UTC-5) mostraria el dia anterior.
+ */
+const fechaLarga = computed(() => {
+  if (!fechaTentativa.value) return ''
+  const [y, m, d] = fechaTentativa.value.split('-').map(Number)
+  const texto = new Date(y, m - 1, d).toLocaleDateString('es-PE', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+  return texto.charAt(0).toUpperCase() + texto.slice(1)
+})
+
+/** Fotos { key, full, thumb } del servicio abierto. */
+const photos = computed(() => service.value?.gallery ?? [])
+
+/** Si una imagen no carga, marcamos el contenedor para no mostrar el icono roto. */
+function onImgError(e) {
+  e.target.closest('.gallery-photo')?.classList.add('is-broken')
+  e.target.style.visibility = 'hidden'
+}
+
+/** Precarga la foto anterior y la siguiente para que el lightbox no parpadee. */
+function preloadNeighbors(index) {
+  const total = photos.value.length
+  if (total < 2) return
+  for (const i of [(index + 1) % total, (index - 1 + total) % total]) {
+    const img = new Image()
+    img.src = photos.value[i].full
+  }
+}
 
 const packageIcons = {
   basico: 'fas fa-camera',
@@ -127,6 +233,7 @@ function getPackageIcon(key) {
 function open(serviceData) {
   service.value = serviceData
   step.value = 'gallery'
+  fechaTentativa.value = ''
   if (!bsModal) {
     bsModal = new bootstrap.Modal(modalRef.value)
   }
@@ -136,12 +243,14 @@ function open(serviceData) {
 function resetState() {
   step.value = 'gallery'
   lightboxOpen.value = false
+  fechaTentativa.value = ''
 }
 
 function openLightbox(index) {
   lightboxIndex.value = index
   lightboxOpen.value = true
   document.body.style.overflow = 'hidden'
+  preloadNeighbors(index)
 }
 
 function closeLightbox() {
@@ -150,13 +259,35 @@ function closeLightbox() {
 }
 
 function prevPhoto() {
-  const total = service.value?.gallery?.length || 0
+  const total = photos.value.length
+  if (!total) return
   lightboxIndex.value = (lightboxIndex.value - 1 + total) % total
+  preloadNeighbors(lightboxIndex.value)
 }
 
 function nextPhoto() {
-  const total = service.value?.gallery?.length || 0
+  const total = photos.value.length
+  if (!total) return
   lightboxIndex.value = (lightboxIndex.value + 1) % total
+  preloadNeighbors(lightboxIndex.value)
+}
+
+/* --- Swipe en movil --------------------------------------------------- */
+const SWIPE_MIN = 45
+let touchStartX = 0
+let touchStartY = 0
+
+function onTouchStart(e) {
+  touchStartX = e.changedTouches[0].clientX
+  touchStartY = e.changedTouches[0].clientY
+}
+
+function onTouchEnd(e) {
+  const dx = e.changedTouches[0].clientX - touchStartX
+  const dy = e.changedTouches[0].clientY - touchStartY
+  if (Math.abs(dx) < SWIPE_MIN || Math.abs(dx) < Math.abs(dy)) return
+  if (dx < 0) nextPhoto()
+  else prevPhoto()
 }
 
 function handleKeydown(e) {
@@ -166,10 +297,36 @@ function handleKeydown(e) {
   if (e.key === 'ArrowRight') nextPhoto()
 }
 
-function cotizar(type, name) {
-  const message = `¡Hola! Me interesa el paquete ${name} de ${service.value.name}. ¿Podrían darme más información?`
-  const url = `https://wa.me/51978147539?text=${encodeURIComponent(message)}`
-  window.open(url, '_blank')
+const WHATSAPP_PHONE = '51978147539'
+
+/**
+ * Abre WhatsApp con un mensaje de CONFIRMACION de reserva: el cliente ya
+ * eligio paquete y precio, asi que el mensaje separa la fecha y pide lo unico
+ * que falta para cerrar (medio de pago y agenda), en vez de pedir informacion.
+ */
+function reservar(pkg) {
+  const nombre = service.value?.name ?? ''
+  const conFecha = Boolean(fechaTentativa.value)
+
+  const lineas = [
+    '¡Hola JC Studios! Quiero *confirmar la reserva* de este servicio:',
+    '',
+    `*Servicio:* ${nombre}`,
+    `*Paquete:* ${pkg.namePaquete}`,
+    `*Inversión:* S/. ${pkg.price}`,
+    `*Duración:* ${pkg.duration}`,
+    conFecha ? `*Fecha tentativa:* ${fechaLarga.value}` : null,
+    '',
+    'Para cerrar la reserva, por favor indíquenme:',
+    conFecha
+      ? '1. Si tienen disponibilidad para esa fecha y qué horarios me quedan.'
+      : '1. Las fechas y horarios que tienen libres en su agenda.',
+    '2. Los medios de pago y cómo hago el adelanto para separarla.',
+    '',
+    'Quedo atento. ¡Gracias!',
+  ].filter((linea) => linea !== null)
+  const url = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(lineas.join('\n'))}`
+  window.open(url, '_blank', 'noopener,noreferrer')
 }
 
 onMounted(() => {
@@ -203,11 +360,18 @@ defineExpose({ open })
 
 .gallery-photo {
   position: relative;
+  background: linear-gradient(110deg, #ececec 25%, #f5f5f5 40%, #ececec 55%);
+  background-size: 200% 100%;
+  animation: photoFadeIn 0.4s ease both, shimmer 1.4s linear infinite;
   border-radius: 6px;
   overflow: hidden;
   cursor: pointer;
-  animation: photoFadeIn 0.4s ease both;
   min-height: 200px;
+}
+
+.gallery-photo.is-broken {
+  animation: none;
+  background: #efefef;
 }
 
 .gallery-photo img {
@@ -291,6 +455,108 @@ defineExpose({ open })
   text-align: center;
   color: #888;
   margin-bottom: 2rem;
+}
+
+.date-picker {
+  max-width: 460px;
+  margin: 0 auto 2rem;
+  padding: 1rem 1.2rem;
+  border: 2px dashed var(--border-color, #e9ecef);
+  border-radius: 14px;
+  background: var(--bg-tertiary, #f8f9fa);
+  text-align: center;
+}
+
+.date-label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary, #233559);
+  margin-bottom: 0.7rem;
+  font-size: 0.95rem;
+}
+
+.date-label i {
+  color: var(--primary-color);
+  margin-right: 6px;
+}
+
+.date-optional {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted, #999);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 20px;
+  padding: 2px 8px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.date-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.date-input {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #233559);
+  background: var(--bg-card, #fff);
+  border: 2px solid var(--border-color, #e9ecef);
+  border-radius: 50px;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  min-width: 210px;
+  /* Hace que el calendario nativo del navegador siga el tema del sitio */
+  color-scheme: light;
+}
+
+[data-theme='dark'] .date-input {
+  color-scheme: dark;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(227, 5, 18, 0.12);
+}
+
+.date-clear {
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #999);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.date-clear:hover {
+  background: rgba(227, 5, 18, 0.1);
+  color: var(--primary-color);
+}
+
+.date-preview {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted, #888);
+  line-height: 1.5;
+}
+
+.date-preview i {
+  color: #28a745;
+  margin-right: 4px;
+}
+
+.date-preview strong {
+  color: var(--text-primary, #233559);
 }
 
 .plans-grid {
@@ -537,6 +803,23 @@ defineExpose({ open })
   to { opacity: 1; }
 }
 
+.gallery-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #999;
+}
+
+.gallery-empty i {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+  display: block;
+  opacity: 0.5;
+}
+
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
 @keyframes photoFadeIn {
   from {
     opacity: 0;
@@ -562,6 +845,18 @@ defineExpose({ open })
 
   .plans-title {
     font-size: 1.4rem;
+  }
+
+  .date-picker {
+    margin-bottom: 1.5rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .date-input {
+    min-width: 0;
+    flex: 1;
+    font-size: 0.95rem;
+    padding: 10px 14px;
   }
 
   .plan-price {

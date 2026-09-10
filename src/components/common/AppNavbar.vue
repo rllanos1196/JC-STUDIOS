@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg fixed-top" :class="{ scrolled: isScrolled }">
     <div class="container">
       <router-link class="navbar-brand" to="/#inicio">
-        <img src="/img/JcStudiosBlanco.png" alt="logo" class="logo-jc" />
+        <img :src="logo" alt="JC Studios" class="logo-jc" width="120" height="40" />
       </router-link>
       <div class="d-flex align-items-center">
         <button class="theme-toggle" @click="themeStore.toggle" :title="themeStore.isDark ? 'Modo claro' : 'Modo oscuro'">
@@ -32,6 +32,9 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { useThemeStore } from '@/stores/theme.js'
+import { getLogo } from '@/services/galleryLoader.js'
+
+const logo = getLogo('blanco')
 
 const themeStore = useThemeStore()
 const isScrolled = ref(false)

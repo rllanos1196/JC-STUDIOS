@@ -3,7 +3,7 @@
     <div class="login-container">
       <div class="login-card">
         <div class="text-center mb-4">
-          <img src="/img/jcStudios.png" alt="JC Studios" class="login-logo" />
+          <img :src="logo" alt="JC Studios" class="login-logo" />
           <h2 class="login-title">Panel de Administración</h2>
         </div>
 
@@ -40,6 +40,9 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'
 import { useThemeStore } from '@/stores/theme.js'
+import { getLogo } from '@/services/galleryLoader.js'
+
+const logo = getLogo('jcstudios')
 
 const router = useRouter()
 const authStore = useAuthStore()

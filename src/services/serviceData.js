@@ -1,43 +1,23 @@
-import { getEventosImages, getSesionesImages } from './galleryLoader.js'
+import { getServicePhotos, getServiceCover } from './galleryLoader.js'
 
-const eventosGallery = {
-  bodas: getEventosImages('bodas'),
-  bautizos: getEventosImages('bautizos'),
-  quinceaneros: getEventosImages('quinceaneros'),
-  aniversarios: getEventosImages('aniversarios'),
-  graduaciones: getEventosImages('graduaciones'),
-  corporativos: getEventosImages('corporativos'),
-}
+/**
+ * Catalogo de servicios.
+ *
+ * Las imagenes NO se declaran aqui: cada servicio apunta a su carpeta con
+ * `folder` y galleryLoader resuelve portada y galeria leyendo
+ * public/img/gallery/<categoria>/<folder>/. Para cambiar las fotos de un
+ * servicio se agregan o quitan archivos de esa carpeta, nada mas.
+ */
+const CATEGORY_DIRS = { evento: 'eventos', sesion: 'sesiones' }
 
-const sesionesGallery = {
-  individual: getSesionesImages('individual'),
-  grupal: getSesionesImages('grupal'),
-  maternidad: getSesionesImages('maternidad'),
-  artistica: getSesionesImages('artistica'),
-  cumpleanos: getSesionesImages('cumpleanos'),
-}
-
-function getGallery(key, category, defaults) {
-  const gallery = category === 'evento' ? eventosGallery[key] : sesionesGallery[key]
-  return gallery && gallery.length > 0 ? gallery : defaults
-}
-
-export const serviceData = {
+const serviceDefinitions = {
   bodas: {
     name: 'Bodas',
     icon: 'fas fa-ring',
     category: 'evento',
-    cover: '/img/BODAS_min.jpg',
     description:
       'Capturamos la magia de tu día más especial con elegancia y romanticismo. Desde la preparación de la novia hasta el último baile, documentamos cada emoción y momento único de vuestra celebración de amor.',
-    gallery: getGallery('bodas', 'evento', [
-      '/img/BODAS.jpg',
-      '/img/BODAS_min.jpg',
-      '/img/trabajo1.jpg',
-      '/img/trabajo2.jpg',
-      '/img/trabajo3.jpg',
-      '/img/portada.jpg',
-    ]),
+    folder: 'bodas',
     hasPackages: true,
     packages: {
       basico: {
@@ -80,16 +60,9 @@ export const serviceData = {
     name: 'Bautizos',
     icon: 'fas fa-cross',
     category: 'evento',
-    cover: '/img/Bautizo.jpg',
     description:
       'Momentos sagrados y emotivos capturados con delicadeza y respeto. Documentamos este día tan especial para toda la familia con sensibilidad y profesionalismo.',
-    gallery: getGallery('bautizos', 'evento', [
-      '/img/Bautizo.jpg',
-      '/img/trabajo4.jpg',
-      '/img/trabajo5.jpg',
-      '/img/trabajo6.jpg',
-      '/img/portada1.jpg',
-    ]),
+    folder: 'bautizos',
     hasPackages: true,
     packages: {
       basico: {
@@ -132,16 +105,9 @@ export const serviceData = {
     name: 'Quinceañeros',
     icon: 'fas fa-crown',
     category: 'evento',
-    cover: '/img/QUINCEAÑEROS_min.jpg',
     description:
       'Capturamos la esencia de tu celebración con un enfoque fresco y vibrante. Desde la sesión previa hasta el baile, documentamos cada detalle de tu transición a la adultez.',
-    gallery: getGallery('quinceaneros', 'evento', [
-      '/img/QUINCEAÑEROS.jpg',
-      '/img/QUINCEAÑEROS_min.jpg',
-      '/img/trabajo7.jpg',
-      '/img/trabajo8.jpg',
-      '/img/portada2.jpg',
-    ]),
+    folder: 'quinceaneros',
     hasPackages: true,
     packages: {
       basico: {
@@ -184,16 +150,9 @@ export const serviceData = {
     name: 'Graduaciones',
     icon: 'fas fa-graduation-cap',
     category: 'evento',
-    cover: '/img/GRADUACIONES_min.jpg',
     description:
       'Capturamos el orgullo y la alegría de tu graduación con un estilo profesional y dinámico. Desde la ceremonia hasta la celebración, documentamos cada logro y emoción.',
-    gallery: getGallery('graduaciones', 'evento', [
-      '/img/GRADUACIONES.jpg',
-      '/img/GRADUACIONES_min.jpg',
-      '/img/trabajo9.jpg',
-      '/img/trabajo10.jpg',
-      '/img/portada3.jpg',
-    ]),
+    folder: 'graduaciones',
     hasPackages: true,
     packages: {
       basico: {
@@ -234,16 +193,9 @@ export const serviceData = {
     name: 'Aniversarios',
     icon: 'fas fa-heart',
     category: 'evento',
-    cover: '/img/Aniversarios_min.jpg',
     description:
       'Capturamos la esencia de vuestro amor con un enfoque romántico y personalizado. Desde una cena íntima hasta una celebración grandiosa, documentamos cada momento especial.',
-    gallery: getGallery('aniversarios', 'evento', [
-      '/img/Aniversarios_min.jpg',
-      '/img/trabajo11.jpg',
-      '/img/trabajo12.jpg',
-      '/img/portada.jpg',
-      '/img/principal.jpg',
-    ]),
+    folder: 'aniversarios',
     hasPackages: true,
     packages: {
       standard: {
@@ -276,16 +228,9 @@ export const serviceData = {
     name: 'Eventos Corporativos',
     icon: 'fas fa-building',
     category: 'evento',
-    cover: '/img/CORPORATIVOS_min.jpg',
     description:
       'Capturamos la profesionalidad y el dinamismo de vuestros eventos empresariales. Desde conferencias hasta lanzamientos de productos, documentamos cada aspecto con elegancia.',
-    gallery: getGallery('corporativos', 'evento', [
-      '/img/CORPORATIVOS.jpg',
-      '/img/CORPORATIVOS_min.jpg',
-      '/img/trabajo1.jpg',
-      '/img/trabajo5.jpg',
-      '/img/trabajo9.jpg',
-    ]),
+    folder: 'corporativos',
     hasPackages: true,
     packages: {
       standard: {
@@ -315,16 +260,9 @@ export const serviceData = {
     name: 'Cumpleaños',
     icon: 'fas fa-birthday-cake',
     category: 'sesion',
-    cover: '/img/SESIÓN CUMPLEAÑOS_min.jpg',
     description:
       'Capturamos la alegría y la diversión de tu celebración con un enfoque fresco y vibrante. Desde la decoración hasta los momentos más emotivos, documentamos cada detalle.',
-    gallery: getGallery('cumpleanos', 'sesion', [
-      '/img/SESIÓN CUMPLEAÑOS_.jpg',
-      '/img/SESIÓN CUMPLEAÑOS_min.jpg',
-      '/img/trabajo2.jpg',
-      '/img/trabajo6.jpg',
-      '/img/trabajo10.jpg',
-    ]),
+    folder: 'cumpleanos',
     hasPackages: true,
     packages: {
       standard: {
@@ -358,16 +296,9 @@ export const serviceData = {
     name: 'Sesiones Grupales',
     icon: 'fas fa-users',
     category: 'sesion',
-    cover: '/img/SESIÓN GRUPAL_min.jpg',
     description:
       'Capturamos la esencia de tu grupo con un enfoque dinámico y divertido. Desde amigos hasta familias, documentamos cada interacción y emoción en un ambiente relajado.',
-    gallery: getGallery('grupal', 'sesion', [
-      '/img/SESIÓN GRUPAL.jpg',
-      '/img/SESIÓN GRUPAL_min.jpg',
-      '/img/trabajo3.jpg',
-      '/img/trabajo7.jpg',
-      '/img/trabajo11.jpg',
-    ]),
+    folder: 'grupal',
     hasPackages: true,
     packages: {
       standard: {
@@ -403,16 +334,9 @@ export const serviceData = {
     name: 'Retratos Individuales',
     icon: 'fas fa-user-tie',
     category: 'sesion',
-    cover: '/img/SESIÓN INDIVIDUAL_min.jpg',
     description:
       'Capturamos tu imagen con un enfoque profesional y elegante. Desde retratos corporativos hasta sesiones de marca personal, documentamos tu esencia con estilo y sofisticación.',
-    gallery: getGallery('individual', 'sesion', [
-      '/img/SESIÓN INDIVIDUAL.jpg',
-      '/img/SESIÓN INDIVIDUAL_min.jpg',
-      '/img/trabajo4.jpg',
-      '/img/trabajo8.jpg',
-      '/img/trabajo12.jpg',
-    ]),
+    folder: 'individual',
     hasPackages: true,
     packages: {
       standard: {
@@ -446,17 +370,9 @@ export const serviceData = {
     name: 'Retratos Artísticos',
     icon: 'fas fa-palette',
     category: 'sesion',
-    cover: '/img/SESIÓN ARTÍSTICA_min.jpg',
     description:
       'Capturamos tu esencia con un enfoque creativo y único. Desde retratos conceptuales hasta sesiones de moda, documentamos tu personalidad con un estilo artístico y distintivo.',
-    gallery: getGallery('artistica', 'sesion', [
-      '/img/SESIÓN ARTÍSTICA.jpg',
-      '/img/SESIÓN ARTÍSTICA_min.jpg',
-      '/img/trabajo1.jpg',
-      '/img/trabajo5.jpg',
-      '/img/trabajo9.jpg',
-      '/img/portada3.jpg',
-    ]),
+    folder: 'artistica',
     hasPackages: true,
     packages: {
       standard: {
@@ -490,16 +406,9 @@ export const serviceData = {
     name: 'Maternidad',
     icon: 'fas fa-baby',
     category: 'sesion',
-    cover: '/img/SESIÓN MATERNIDAD_min.jpg',
     description:
       'Capturamos la belleza y la emoción de la espera con un enfoque cálido y acogedor. Desde sesiones íntimas hasta retratos familiares, documentamos cada momento especial.',
-    gallery: getGallery('maternidad', 'sesion', [
-      '/img/SESIÓN MATERNIDAD.jpg',
-      '/img/SESIÓN MATERNIDAD_min.jpg',
-      '/img/trabajo2.jpg',
-      '/img/trabajo6.jpg',
-      '/img/trabajo10.jpg',
-    ]),
+    folder: 'maternidad',
     hasPackages: true,
     packages: {
       standard: {
@@ -532,14 +441,9 @@ export const serviceData = {
     name: 'Fotografía de Mascotas',
     icon: 'fas fa-paw',
     category: 'sesion',
-    cover: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
     description:
       'Capturamos la esencia y personalidad de tus animales con un enfoque divertido y creativo. Desde sesiones en estudio hasta aventuras al aire libre, documentamos cada momento especial.',
-    gallery: [
-      'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    ],
+    folder: 'mascotas',
     hasPackages: true,
     packages: {
       standard: {
@@ -568,3 +472,32 @@ export const serviceData = {
     },
   },
 }
+
+/**
+ * Resuelve cada definicion a un servicio listo para la UI:
+ *   cover   -> miniatura para la tarjeta de la grilla
+ *   gallery -> fotos { full, thumb } para el modal y el lightbox
+ */
+function resolveService(key, def) {
+  const dir = CATEGORY_DIRS[def.category]
+  const folder = def.folder || key
+  const photos = dir ? getServicePhotos(dir, folder) : []
+  const cover = dir ? getServiceCover(dir, folder) : null
+
+  return {
+    ...def,
+    folder,
+    photos,
+    gallery: photos,
+    cover: cover ? cover.thumb : '',
+    coverFull: cover ? cover.full : '',
+    hasGallery: photos.length > 0,
+  }
+}
+
+export const serviceData = Object.fromEntries(
+  Object.entries(serviceDefinitions).map(([key, def]) => [key, resolveService(key, def)])
+)
+
+export { serviceDefinitions }
+export default serviceData

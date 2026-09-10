@@ -19,7 +19,13 @@
           class="carousel-item"
           :class="{ active: index === 0 }"
         >
-          <img :src="slide.image" :alt="slide.title" />
+          <img
+            :src="slide.image"
+            :alt="slide.title"
+            :loading="index === 0 ? 'eager' : 'lazy'"
+            :fetchpriority="index === 0 ? 'high' : 'auto'"
+            decoding="async"
+          />
           <div class="carousel-caption">
             <h1 class="hero-title">{{ slide.title }}</h1>
             <p class="hero-subtitle">{{ slide.subtitle }}</p>

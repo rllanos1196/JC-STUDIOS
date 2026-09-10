@@ -1,7 +1,7 @@
 <template>
   <aside class="admin-sidebar">
     <div class="sidebar-header">
-      <img src="/img/JcStudiosBlanco.png" alt="JC Studios" class="sidebar-logo" />
+      <img :src="logo" alt="JC Studios" class="sidebar-logo" />
     </div>
 
     <nav class="sidebar-nav">
@@ -35,6 +35,9 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'
+import { getLogo } from '@/services/galleryLoader.js'
+
+const logo = getLogo('blanco')
 
 const router = useRouter()
 const authStore = useAuthStore()

@@ -2,35 +2,29 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { getHeroImages } from '@/services/galleryLoader.js'
 
-const heroImages = getHeroImages()
-
-const defaultSlides = [
+/**
+ * Las slides del hero salen de public/img/gallery/hero/.
+ * Los textos rotan sobre las imagenes que haya en la carpeta, asi que agregar
+ * o quitar una foto no requiere tocar codigo.
+ */
+const copy = [
   {
-    id: 1,
-    image: '/img/principal.jpg',
-    title: 'Capturamos tus mejores Momentos',
-    subtitle: 'Fotografía profesional para eventos, retratos y momentos únicos.',
+    title: 'JC Studios - Fotografía Profesional',
+    subtitle: 'Capturamos tus mejores momentos.',
     ctaText: 'Descubre Nuestros Servicios',
     ctaLink: '#servicios',
-    active: true,
   },
   {
-    id: 2,
-    image: '/img/portada.jpg',
     title: 'Arte Visual que Cuenta Historias',
     subtitle: 'La magia del momento capturada para siempre.',
-    ctaText: 'Ver Nuestro Portfolio',
+    ctaText: 'Ver Nuestros Servicios',
     ctaLink: '#servicios',
-    active: true,
   },
   {
-    id: 3,
-    image: '/img/portada2.jpg',
     title: 'Profesionalismo y Creatividad',
-    subtitle: 'Transformamos tus celebraciones en recuerdos inolvidables',
+    subtitle: 'Transformamos tus celebraciones en recuerdos inolvidables.',
     ctaText: 'Contáctanos Ahora',
     ctaLink: '#contacto',
-    active: true,
   },
 ]
 
@@ -38,16 +32,13 @@ function buildSlidesFromImages(images) {
   return images.map((img, index) => ({
     id: index + 1,
     image: img,
-    title: 'JC Studios - Fotografía Profesional',
-    subtitle: 'Capturamos tus mejores momentos.',
-    ctaText: 'Descubre Nuestros Servicios',
-    ctaLink: '#servicios',
+    ...copy[index % copy.length],
     active: true,
   }))
 }
 
 export const useHeroStore = defineStore('hero', () => {
-  const slides = ref(heroImages.length > 0 ? buildSlidesFromImages(heroImages) : defaultSlides)
+  const slides = ref(buildSlidesFromImages(getHeroImages()))
 
   const activeSlides = computed(() => slides.value.filter((s) => s.active))
 

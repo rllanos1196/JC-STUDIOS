@@ -35,8 +35,18 @@
           class="service-card"
           @click="openService(service)"
         >
-          <div class="service-card-image">
-            <img :src="service.cover" :alt="service.name" loading="lazy" />
+          <div class="service-card-image" :class="{ 'is-empty': !service.cover }">
+            <img
+              v-if="service.cover"
+              :src="service.cover"
+              :alt="service.name"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="300"
+              @error="onImgError"
+            />
+            <i v-else :class="service.icon" class="service-card-placeholder"></i>
             <div class="service-card-overlay">
               <div class="overlay-content">
                 <span class="overlay-name">{{ service.name }}</span>
@@ -70,6 +80,11 @@ const serviceModalRef = ref(null)
 const activeCategory = computed(() => store.activeCategory)
 const activeServices = computed(() => store.activeServices)
 
+function onImgError(e) {
+  e.target.parentElement?.classList.add('is-empty')
+  e.target.remove()
+}
+
 function openService(service) {
   if (serviceModalRef.value) {
     serviceModalRef.value.open(service)
@@ -78,6 +93,19 @@ function openService(service) {
 </script>
 
 <style scoped>
+.service-card-image.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary, #f4f6f9);
+}
+
+.service-card-placeholder {
+  font-size: 2.2rem;
+  color: var(--primary-color);
+  opacity: 0.35;
+}
+
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
