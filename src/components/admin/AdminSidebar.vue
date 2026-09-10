@@ -37,7 +37,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'
 import { getLogo } from '@/services/galleryLoader.js'
 
-const logo = getLogo('blanco')
+const logo = getLogo('jcstudiosblanco')
 
 const router = useRouter()
 const authStore = useAuthStore()

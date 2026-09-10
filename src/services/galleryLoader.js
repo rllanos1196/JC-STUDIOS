@@ -117,12 +117,18 @@ export function getHeroImages() {
   return getPhotos('hero').map((p) => p.full)
 }
 
-/** Logo por nombre parcial, con fallback al primero disponible. */
+/**
+ * Logo por nombre. Busca coincidencia exacta primero para que nombres que son
+ * prefijo de otros (jcstudios vs jcstudiosblanco) no se confundan entre si.
+ */
 export function getLogo(name = '') {
   const logos = getPhotos('logos')
   if (logos.length === 0) return ''
   const needle = name.toLowerCase()
-  const hit = logos.find((l) => l.key.toLowerCase().includes(needle))
+  const hit =
+    logos.find((l) => l.key.toLowerCase() === needle) ||
+    logos.find((l) => l.key.toLowerCase().startsWith(needle)) ||
+    logos.find((l) => l.key.toLowerCase().includes(needle))
   return (hit || logos[0]).full
 }
 

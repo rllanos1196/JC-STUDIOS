@@ -56,13 +56,17 @@
 
 html {
   scroll-behavior: smooth;
+  /* Va en html, no solo en body: overflow-x en body por si solo NO impide que
+     la ventana desplace horizontalmente. Y clip en vez de hidden porque hidden
+     convierte el elemento en contenedor de scroll y rompe position: sticky. */
+  overflow-x: clip;
 }
 
 body {
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   padding-top: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--bg-primary);
   color: var(--text-primary);
   transition: background 0.3s ease, color 0.3s ease;
@@ -76,16 +80,24 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
   padding: 0.3rem 1.5rem;
-  height: 55px;
+  /* min-height y no height: si el contenido crece, la pastilla crece con el */
+  min-height: 55px;
   z-index: 1030;
   position: fixed;
   top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  /* Centrado con margin auto en vez de left:50% + translate. Los porcentajes
+     de un elemento fixed excluyen la barra de scroll, los vw no: usar 95vw
+     hacia que la pastilla se descentrara al aparecer o desaparecer la barra
+     (justo lo que pasaba al entrar y salir del modo movil). */
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  /* Casi todo el ancho de la pantalla, con un margen fijo a cada lado.
+     Se usa % y no vw a proposito: en un elemento fixed el % excluye la barra
+     de scroll y el vw no, que era lo que descentraba la pastilla. */
   width: calc(100% - 40px);
-  max-width: 95vw;
   box-sizing: border-box;
 }
 
@@ -95,6 +107,8 @@ body {
   width: 100%;
   padding: 0;
   margin: 0;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
 }
 
 .navbar .container .navbar-brand {
@@ -125,17 +139,28 @@ body {
   font-size: 2rem;
   color: white !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
 }
 
 .logo-jc {
-  width: 80px;
+  /* Se limita por ALTO, no por ancho: asi entra en la barra sea el logo
+     apaisado o cuadrado. El ancho se ajusta solo. */
+  width: auto;
   height: auto;
+  max-height: 38px;
+  max-width: 130px;
+  object-fit: contain;
   margin-right: 10px;
   padding: 0;
   background: transparent;
   border: none;
   box-shadow: none;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .logo-jc:hover {
@@ -1546,7 +1571,8 @@ footer {
   }
 
   .logo-jc {
-    width: 70px;
+    max-height: 34px;
+    max-width: 110px;
   }
 
   .navbar-nav .nav-link {
@@ -1611,8 +1637,8 @@ footer {
     top: 10px;
     width: calc(100% - 20px);
     border-radius: 12px;
-    padding: 0.2rem 0.6rem;
-    height: 44px;
+    padding: 0.25rem 0.75rem;
+    min-height: 46px;
   }
 
   #inicio {
@@ -1628,12 +1654,9 @@ footer {
   }
 
   .logo-jc {
-    width: 66px;
+    max-height: 30px;
+    max-width: 96px;
     margin-right: 4px;
-    padding: 0;
-    background: transparent;
-    border: none;
-    object-fit: contain;
   }
 
   .navbar-brand {
@@ -1651,10 +1674,11 @@ footer {
   }
 
   .theme-toggle {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     font-size: 0.8rem;
     margin-left: 0.5rem;
+    flex-shrink: 0;
   }
 
   .navbar-toggler {
@@ -1836,10 +1860,10 @@ footer {
 
   .navbar {
     top: 6px;
-    width: calc(100% - 12px);
+    width: calc(100% - 16px);
     border-radius: 10px;
-    padding: 0.15rem 0.5rem;
-    height: 40px;
+    padding: 0.25rem 0.6rem;
+    min-height: 42px;
   }
 
   #inicio {
@@ -1855,12 +1879,9 @@ footer {
   }
 
   .logo-jc {
-    width: 58px;
+    max-height: 26px;
+    max-width: 84px;
     margin-right: 3px;
-    padding: 0;
-    background: transparent;
-    border: none;
-    object-fit: contain;
   }
 
   .navbar-brand {
@@ -1871,10 +1892,11 @@ footer {
   }
 
   .theme-toggle {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     font-size: 0.75rem;
-    margin-left: 0.3rem;
+    margin-left: 0.4rem;
+    flex-shrink: 0;
   }
 
   .navbar-toggler {
