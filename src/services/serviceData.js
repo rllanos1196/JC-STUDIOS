@@ -202,8 +202,8 @@ const serviceDefinitions = {
     packages: {
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '2 horas',
+        price: 300,
+        duration: '',
         photos: '15 fotos editadas',
         features: [
           'Sesión Cumpleaños, 15 fotografías con retoque profesional.',
@@ -214,7 +214,7 @@ const serviceDefinitions = {
       premium: {
         namePaquete: 'Premium',
         price: 400,
-        duration: '3 horas',
+        duration: '',
         photos: '20 fotos editadas',
         features: [
           'Sesión Cumpleaños, 20 fotografías con retoque profesional.',
@@ -381,8 +381,8 @@ const serviceDefinitions = {
     packages: {
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '45 minutos',
+        price: 300,
+        duration: '',
         photos: '15 fotos editadas',
         features: [
           'Sesión de 45 minutos',
@@ -394,7 +394,7 @@ const serviceDefinitions = {
       premium: {
         namePaquete: 'Premium',
         price: 400,
-        duration: '1 hora',
+        duration: '',
         photos: '20 fotos editadas',
         features: [
           'Sesión de 1 hora',
@@ -453,7 +453,7 @@ const serviceDefinitions = {
       standard: {
         namePaquete: 'Estándar',
         price: 250,
-        duration: '45 minutos',
+        duration: '',
         photos: '15 fotos editadas',
         features: [
           'Sesión de 45 minutos.',
@@ -463,8 +463,8 @@ const serviceDefinitions = {
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
-        duration: '1 hora',
+        price: 350,
+        duration: '',
         photos: '20 fotos editadas',
         features: [
           'Sesión de 1 hora.',
