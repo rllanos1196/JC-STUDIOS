@@ -24,8 +24,7 @@ const COVER_HINT = /^(portada|principal|cover|hero|main)/i
 const MIN_SUFFIX = /-min$/i
 
 function buildUrl(folder, file) {
-  const parts = `${BASE}/${manifest.base}/${folder}/${file}`.split('/').filter(Boolean)
-  return '/' + parts.map((p) => encodeURIComponent(p)).join('/')
+  return `${BASE}img/gallery/${folder}/${file}`
 }
 
 function stemOf(file) {
