@@ -51,7 +51,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory('/JC-STUDIOS/'),
+  history: createWebHistory(),
   routes,
   scrollBehavior(to) {
     if (to.hash) {

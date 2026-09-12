@@ -22,15 +22,15 @@ const serviceDefinitions = {
     packages: {
       basico: {
         namePaquete: 'Básico',
-        price: 150,
-        duration: '1 hora',
-        photos: 'Fotos sin editar',
-        features: ['Fotografía de evento sin edición.', 'Video de evento 1 hora en Full HD'],
+        price: 1200,
+        duration: '',
+        photos: 'Fotos con edición',
+        features: ['Fotografía de evento.', 'Video de evento 1 hora en Full HD'],
       },
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '2 horas',
+        price: 2000,
+        duration: '',
         photos: '15 fotos editadas',
         features: [
           'Sesión Pre - Boda, 15 fotografías con retoque profesional.',
@@ -41,8 +41,8 @@ const serviceDefinitions = {
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
-        duration: '3 horas',
+        price: 3000,
+        duration: '',
         photos: '25 fotos retoque Profesional',
         features: [
           'Sesión Pre - Boda, 15 fotografías con retoque profesional.',
@@ -67,15 +67,15 @@ const serviceDefinitions = {
     packages: {
       basico: {
         namePaquete: 'Básico',
-        price: 250,
-        duration: '2 horas',
-        photos: 'Fotos sin editar',
-        features: ['Fotografía de evento sin edición', 'Video de evento - 1 hora Full HD.'],
+        price: 2100,
+        duration: '',
+        photos: 'Fotos con edición',
+        features: ['Fotografía de evento.', 'Video de evento - 1 hora Full HD.'],
       },
       standard: {
         namePaquete: 'Estándar',
-        price: 400,
-        duration: '4 horas',
+        price: 1950,
+        duration: '',
         photos: '15 fotos editadas',
         features: [
           'Sesión Pre - Bautizo, 15 fotografías con retoque profesional.',
@@ -86,8 +86,8 @@ const serviceDefinitions = {
       },
       premium: {
         namePaquete: 'Premium',
-        price: 600,
-        duration: '6 horas',
+        price: 2800,
+        duration: '',
         photos: '20 fotos editadas',
         features: [
           'Sesión Pre - Bautizo, 20 fotos con retoque profesional.',
@@ -112,15 +112,15 @@ const serviceDefinitions = {
     packages: {
       basico: {
         namePaquete: 'Básico',
-        price: 150,
-        duration: '1 hora',
-        photos: 'Fotos sin editar',
-        features: ['Fotografía de evento sin edición.', 'Video de evento - 1 hora en Full HD.'],
+        price: 1200,
+        duration: '',
+        photos: 'Fotos con edición',
+        features: ['Fotografía de evento.', 'Video de evento - 1 hora en Full HD.'],
       },
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '2 horas',
+        price: 1800,
+        duration: '',
         photos: '15 fotos editadas',
         features: [
           'Sesión Pre - 15 años, 15 fotografías con retoque profesional.',
@@ -131,8 +131,8 @@ const serviceDefinitions = {
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
-        duration: '3 horas',
+        price: 2800,
+        duration: '',
         photos: '20 fotos editadas',
         features: [
           'Sesión Pre - 15 años, 20 fotografías con retoque profesional.',
@@ -158,33 +158,35 @@ const serviceDefinitions = {
       basico: {
         namePaquete: 'Básico',
         price: 150,
-        duration: '1 hora',
+        duration: '',
         photos: 'Fotos editadas',
-        features: ['Fotografía de evento con retoque profesional.', 'Video de evento.'],
+        features: ['Fotografía de evento con retoque profesional.', 'Video de evento.', 'Entrega 20 días después del evento.'],
       },
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '2 horas',
+        price: 200,
+        duration: '',
         photos: 'Fotos editadas',
         features: [
           'Sesión fotográfica con retoque profesional.',
           'Fotografía de evento con retoque de color, luces y sombras.',
           'Video de evento Full HD.',
-          'USB + 15 fotos impresas 10x15',
+          'USB 32GB',
+          'Entrega 20 días después del evento.',
         ],
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
-        duration: '3 horas',
+        price: 350,
+        duration: '',
         photos: 'Fotos editadas',
         features: [
           'Sesión fotográfica con retoque profesional.',
           'Fotografía de evento con retoque de color, luces y sombras.',
           'Video de evento Full HD',
-          'USB + 15 fotos impresas 10x15',
+          'USB 64 GB + 15 fotos impresas 10x15',
           'Cuadro',
+          'Entrega 20 días después del evento.',
         ],
       },
     },
@@ -235,8 +237,8 @@ const serviceDefinitions = {
     packages: {
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '2 horas',
+        price: 1200,
+        duration: '',
         photos: 'Fotos con retoque profesional',
         features: [
           'Fotografía de evento con retoque de color, luces y sombras.',
@@ -245,8 +247,8 @@ const serviceDefinitions = {
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
-        duration: '3 horas',
+        price: 1500,
+        duration: '',
         photos: 'Fotos con retoque profesional',
         features: [
           'Fotografía de evento con retoque de color, luces y sombras.',
@@ -265,29 +267,35 @@ const serviceDefinitions = {
     folder: 'cumpleanos',
     hasPackages: true,
     packages: {
+       basico: {
+        namePaquete: 'Básico',
+        price: 950,
+        duration: '',
+        photos: 'Fotos editadas',
+        features: ['Fotografía de evento con retoque profesional.', 'Video de evento de 1 hora FULL HD.',],
+      },
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '1 hora',
+        price: 13000,
+        duration: '',
         photos: '15 fotos editadas',
         features: [
-          '45 minutos de sesión',
-          '1 outfit',
-          '15 fotos con edición + originales.',
-          'En exteriores o estudio.',
+          'Sesión de 15 fotos con retorque profesional',
+          'Fotos de evento con retoque',
+          'Video editado de 1 hora y 30 minutos en FULL HD',
         ],
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
-        duration: '3 horas',
+        price: 1600,
+        duration: '',
         photos: '20 fotos editadas',
         features: [
-          '1 hora de sesión.',
-          'Hasta 3 outfits',
-          '20 fotos con edición + originales.',
-          '20 fotos impresas 10x15 cm',
-          'En exteriores o estudio.',
+          'Sesión de 20 fotos con retorque profesional',
+          'Fostos de evento con retoque',
+          'Video editado de 1 hora y 30 minutos en FULL HD',
+          'Video highlights de 3 a 5 minutos en FULL HD',
+          'Cuadro para firmas',
         ],
       },
     },
@@ -303,26 +311,22 @@ const serviceDefinitions = {
     packages: {
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '2 horas',
+        price: 300,
+        duration: '',
         photos: '15 fotos editadas',
         features: [
           '2 a 5 personas',
-          '1 hora de sesión',
-          '1 outfit',
           '15 fotos con edición + originales.',
-          'En exteriores o estudio.',
         ],
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
-        duration: '3 horas',
+        price: 350,
+        duration: '',
         photos: '20 fotos editadas',
         features: [
           '6 a 12 personas',
-          '1 hora y 30 minutos de sesión.',
-          'Hasta 2 outfit',
+          '1 hora de sesión.',
           '20 fotos con edición + originales.',
           '20 fotos impresas 10x15 cm',
           'En exteriores o estudio.',
@@ -341,8 +345,8 @@ const serviceDefinitions = {
     packages: {
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '45 minutos',
+        price: 300,
+        duration: '',
         photos: '15 fotos editadas',
         features: [
           'Sesión de 45 minutos.',
@@ -353,8 +357,8 @@ const serviceDefinitions = {
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
-        duration: '1 hora',
+        price: 350,
+        duration: '',
         photos: '20 fotos editadas',
         features: [
           '1 hora de sesión.',
@@ -413,8 +417,8 @@ const serviceDefinitions = {
     packages: {
       standard: {
         namePaquete: 'Estándar',
-        price: 250,
-        duration: '45 minutos',
+        price: 300,
+        duration: '',
         photos: '15 fotos editadas',
         features: [
           'Sesión de 45 minutos.',
@@ -424,14 +428,14 @@ const serviceDefinitions = {
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
-        duration: '1 hora',
+        price: 480,
+        duration: '',
         photos: '20 fotos editadas',
         features: [
           'Sesión de 1 hora',
           '1 vestido',
           '20 fotos con edición + originales',
-          '1 fotografía 30x45 cm',
+          '20 fotos impresas 10x15 cm',
           'En exteriores o estudio.',
         ],
       },
