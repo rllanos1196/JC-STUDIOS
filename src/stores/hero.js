@@ -9,7 +9,7 @@ import { getHeroImages } from '@/services/galleryLoader.js'
  */
 const copy = [
   {
-    title: 'JC Studios - Fotografía Profesional',
+    title: 'JC STUDIOS - Fotografía Profesional',
     subtitle: 'Capturamos tus mejores momentos.',
     ctaText: 'Descubre Nuestros Servicios',
     ctaLink: '#servicios',
