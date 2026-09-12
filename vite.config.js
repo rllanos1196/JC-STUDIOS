@@ -78,7 +78,7 @@ function galleryPlugin() {
 }
 
 export default defineConfig({
-  base: './',
+  base: '/JC-STUDIOS/',
   plugins: [vue(), galleryPlugin()],
   resolve: {
     alias: {
