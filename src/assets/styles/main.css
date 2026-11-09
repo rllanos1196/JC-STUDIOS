@@ -1029,15 +1029,6 @@ body {
 .plan-standard .plan-price { color: #e6a800; }
 .plan-premium .plan-price { color: var(--primary-color); }
 
-.plan-duration {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-[data-theme="dark"] .plan-duration {
-  color: #9999b0;
-}
-
 .plan-body {
   padding: 1rem 1.2rem;
   flex: 1;

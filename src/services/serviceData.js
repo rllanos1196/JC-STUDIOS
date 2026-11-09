@@ -67,7 +67,7 @@ const serviceDefinitions = {
     packages: {
       basico: {
         namePaquete: 'Básico',
-        price: 2100,
+        price: 1200,
         duration: '',
         photos: 'Fotos con edición',
         features: ['Fotografía de evento.', 'Video de evento - 1 hora Full HD.'],
@@ -276,7 +276,7 @@ const serviceDefinitions = {
       },
       standard: {
         namePaquete: 'Estándar',
-        price: 13000,
+        price: 1300,
         duration: '',
         photos: '15 fotos editadas',
         features: [

@@ -14,6 +14,3 @@ app.use(pinia)
 app.use(router)
 
 app.mount('#app')
-
-import { useThemeStore } from '@/stores/theme.js'
-useThemeStore()
