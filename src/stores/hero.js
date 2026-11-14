@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { getHeroImages } from '@/services/galleryLoader.js'
+import { getHeroImages, getHeroImagesRuntime } from '@/services/galleryLoader.js'
 
 /**
  * Las slides del hero salen de public/img/gallery/hero/.
@@ -39,6 +39,13 @@ function buildSlidesFromImages(images) {
 
 export const useHeroStore = defineStore('hero', () => {
   const slides = ref(buildSlidesFromImages(getHeroImages()))
+
+  // Detectar imagenes nuevas subidas despues del build (runtime)
+  getHeroImagesRuntime().then((images) => {
+    if (images.length > slides.value.length) {
+      slides.value = buildSlidesFromImages(images)
+    }
+  }).catch(() => {})
 
   const activeSlides = computed(() => slides.value.filter((s) => s.active))
 

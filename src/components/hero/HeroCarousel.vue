@@ -45,9 +45,34 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, watch, nextTick, onMounted } from 'vue'
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { useHeroStore } from '@/stores/hero.js'
 
 const heroStore = useHeroStore()
 const slides = computed(() => heroStore.activeSlides)
+
+let carouselInstance = null
+
+function initCarousel() {
+  const el = document.getElementById('heroCarousel')
+  if (!el) return
+  carouselInstance = bootstrap.Carousel.getOrCreateInstance(el, {
+    interval: 5000,
+    ride: 'carousel',
+  })
+}
+
+onMounted(() => {
+  nextTick(() => initCarousel())
+})
+
+watch(slides, () => {
+  nextTick(() => {
+    if (carouselInstance) {
+      carouselInstance.dispose()
+    }
+    initCarousel()
+  })
+})
 </script>

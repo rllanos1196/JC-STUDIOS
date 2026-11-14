@@ -118,6 +118,68 @@ export function getHeroImages() {
 }
 
 /**
+ * Detecta imagenes del hero en tiempo de ejecucion (runtime).
+ * Util cuando se suben fotos nuevas a la carpeta despues del build/deploy.
+ * Sondea nombres secuenciales (Principal, Principal-2, ..., Principal-N) y
+ * extensiones comunes. Devuelve la lista combinada con las del manifest.
+ */
+export async function getHeroImagesRuntime() {
+  const base = import.meta.env.BASE_URL || '/'
+  const folder = 'img/gallery/hero/'
+  const existing = new Set(getHeroImages())
+  const result = [...existing]
+  const extensions = ['webp', 'jpg', 'jpeg', 'png']
+
+  // Detectar el patron base a partir de los nombres existentes
+  // (ej. "Principal", "Principal-2", "Principal-3", ...)
+  const baseNames = new Set()
+  for (const url of existing) {
+    const file = url.split('/').pop() || ''
+    const stem = file.replace(/\.[^.]+$/, '')
+    // Extraer prefijo: "Principal-2" -> "Principal"
+    const prefix = stem.replace(/-\d+$/, '')
+    baseNames.add(prefix)
+  }
+  if (baseNames.size === 0) baseNames.add('Principal')
+
+  const tryLoad = (url) =>
+    new Promise((resolve) => {
+      const img = new Image()
+      img.onload = () => resolve(true)
+      img.onerror = () => resolve(false)
+      img.src = url
+    })
+
+  // Para cada prefijo, sondear hasta 20 indices consecutivos
+  for (const prefix of baseNames) {
+    for (let i = 1; i <= 30; i++) {
+      const suffix = i === 1 ? '' : `-${i}`
+      let found = false
+      for (const ext of extensions) {
+        const url = `/${[base, folder, `${prefix}${suffix}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
+        if (existing.has(url)) { found = true; break }
+        // normalizar
+        const normalized = url.startsWith('/') ? url : '/' + url
+        if (existing.has(normalized)) { found = true; break }
+        const ok = await tryLoad(normalized)
+        if (ok) {
+          if (!existing.has(normalized)) {
+            existing.add(normalized)
+            result.push(normalized)
+          }
+          found = true
+          break
+        }
+      }
+      // Si no se encontro este indice, parar (asumimos secuencia continua)
+      if (!found && i > 1) break
+    }
+  }
+
+  return [...new Set(result)]
+}
+
+/**
  * Logo por nombre. Busca coincidencia exacta primero para que nombres que son
  * prefijo de otros (jcstudios vs jcstudiosblanco) no se confundan entre si.
  */
