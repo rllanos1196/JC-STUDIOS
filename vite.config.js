@@ -77,8 +77,8 @@ function galleryPlugin() {
   }
 }
 
-export default defineConfig({
-  base: '/JC-STUDIOS/',
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/JC-STUDIOS/' : '/',
   plugins: [vue(), galleryPlugin()],
   resolve: {
     alias: {
@@ -89,4 +89,4 @@ export default defineConfig({
     port: 3000,
     open: true,
   },
-})
+}))
