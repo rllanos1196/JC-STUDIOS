@@ -152,25 +152,34 @@ export async function getPhotosRuntime(folder) {
   const result = [...verified]
 
   const basename = folder.split('/').pop() || 'foto'
-  const candidates = new Set()
-  for (let i = 1; i <= 30; i++) candidates.add(String(i))
-  candidates.add(basename)
-  for (let i = 2; i <= 30; i++) candidates.add(`${basename}-${i}`)
 
-  // 2. Sondear nuevas
-  for (const name of candidates) {
-    let found = false
+  const tryName = async (name) => {
     for (const ext of extensions) {
       const url = `/${[base, baseFolder, `${name}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
       const normalized = url.startsWith('/') ? url : '/' + url
-      if (existingUrls.has(normalized)) { found = true; break }
+      if (existingUrls.has(normalized)) return true
       const ok = await tryLoad(normalized)
       if (ok) {
         existingUrls.add(normalized)
         result.push({ key: name, full: normalized, thumb: normalized })
-        found = true
-        break
+        return true
       }
+    }
+    return false
+  }
+
+  // 2a. Sondear numeros secuenciales (1, 2, 3, ...) - parar al primer gap
+  for (let i = 1; i <= 30; i++) {
+    const found = await tryName(String(i))
+    if (!found && i > 1) break
+  }
+
+  // 2b. Sondear nombre de carpeta con sufijo (bodas, bodas-2, ...) - parar al primer gap
+  const foundBase = await tryName(basename)
+  if (foundBase) {
+    for (let i = 2; i <= 30; i++) {
+      const found = await tryName(`${basename}-${i}`)
+      if (!found) break
     }
   }
 
