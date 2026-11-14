@@ -4,6 +4,37 @@ Esta guía explica cómo nombrar y subir fotos a las carpetas de galería para q
 
 ---
 
+## LOGOS
+**Carpeta**: `img/gallery/logos/`
+
+Los logos se buscan por nombre. Nombres reconocidos actualmente:
+- `jcstudios` → logo principal
+- `jcstudiosblanco` → logo blanco
+- `jc-studios-blanco` → logo blanco (variante)
+- `jc-studios-png-dorado` → logo dorado
+
+**Para agregar un nuevo logo**, nómbralo de forma descriptiva:
+```
+jcstudios.png
+jcstudiosblanco.png
+jcstudios-dorado.png
+jcstudios-negro.png
+```
+
+**Patrón alternativo** (números secuenciales):
+```
+1.png
+2.png
+3.png
+... (hasta 30)
+```
+
+Extensiones: `.webp`, `.jpg`, `.jpeg`, `.png`
+
+**Nota**: Los logos NO se detectan automáticamente por nombre arbitrario en runtime. Si agregas un logo con un nombre nuevo, necesitas rebuild + redeploy para que se registre. Los números secuenciales sí se detectan automáticamente.
+
+---
+
 ## ESTRUCTURA DE CARPETAS EN EL SERVIDOR
 
 ```
