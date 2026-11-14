@@ -123,6 +123,54 @@ export function getHeroImages() {
  * Sondea nombres secuenciales (Principal, Principal-2, ..., Principal-N) y
  * extensiones comunes. Devuelve la lista combinada con las del manifest.
  */
+/**
+ * Sondea en runtime imagenes adicionales para cualquier carpeta.
+ * Util para detectar fotos subidas despues del build/deploy (Hostinger, WinSCP).
+ * Prueba nombres secuenciales (1,2,3...) y el nombre de la carpeta con sufijo.
+ */
+export async function getPhotosRuntime(folder) {
+  const base = import.meta.env.BASE_URL || '/'
+  const baseFolder = `${manifest.base}/${folder}/`
+  const existing = getPhotos(folder)
+  const existingUrls = new Set(existing.map((p) => p.full))
+  const result = [...existing]
+  const extensions = ['webp', 'jpg', 'jpeg', 'png']
+
+  const tryLoad = (url) =>
+    new Promise((resolve) => {
+      const img = new Image()
+      img.onload = () => resolve(true)
+      img.onerror = () => resolve(false)
+      img.src = url
+    })
+
+  const basename = folder.split('/').pop() || 'foto'
+  const candidates = new Set()
+  // Nombres secuenciales
+  for (let i = 1; i <= 30; i++) candidates.add(String(i))
+  // Nombre de la carpeta con sufijo
+  candidates.add(basename)
+  for (let i = 2; i <= 30; i++) candidates.add(`${basename}-${i}`)
+
+  for (const name of candidates) {
+    let found = false
+    for (const ext of extensions) {
+      const url = `/${[base, baseFolder, `${name}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
+      const normalized = url.startsWith('/') ? url : '/' + url
+      if (existingUrls.has(normalized)) { found = true; break }
+      const ok = await tryLoad(normalized)
+      if (ok) {
+        existingUrls.add(normalized)
+        result.push({ key: name, full: normalized, thumb: normalized })
+        found = true
+        break
+      }
+    }
+  }
+
+  return result
+}
+
 export async function getHeroImagesRuntime() {
   const base = import.meta.env.BASE_URL || '/'
   const folder = 'img/gallery/hero/'
