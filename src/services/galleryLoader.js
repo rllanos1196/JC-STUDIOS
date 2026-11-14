@@ -114,7 +114,7 @@ export function getServiceCover(category, folder) {
 }
 
 export function getHeroImages() {
-  return getPhotos('hero').map((p) => p.full)
+  return getPhotos('hero').map((p) => p.full).slice(0, 5)
 }
 
 /**
@@ -198,9 +198,9 @@ export async function getHeroImagesRuntime() {
       img.src = url
     })
 
-  // Para cada prefijo, sondear hasta 20 indices consecutivos
+  // Para cada prefijo, sondear hasta 5 indices consecutivos (max 5 fotos en carrusel)
   for (const prefix of baseNames) {
-    for (let i = 1; i <= 30; i++) {
+    for (let i = 1; i <= 5; i++) {
       const suffix = i === 1 ? '' : `-${i}`
       let found = false
       for (const ext of extensions) {
@@ -224,7 +224,7 @@ export async function getHeroImagesRuntime() {
     }
   }
 
-  return [...new Set(result)]
+  return [...new Set(result)].slice(0, 5)
 }
 
 /**
