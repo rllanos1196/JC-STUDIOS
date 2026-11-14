@@ -243,7 +243,7 @@ function open(serviceData) {
   bsModal.show()
 
   // Detectar fotos nuevas subidas despues del build (runtime)
-  const dir = serviceData?.category === 'eventos' ? 'eventos' : 'sesiones'
+  const dir = serviceData?.category === 'evento' ? 'eventos' : 'sesiones'
   const folder = serviceData?.folder
   if (folder) {
     getPhotosRuntime(`${dir}/${folder}`).then((extra) => {
