@@ -131,9 +131,7 @@ export function getHeroImages() {
 export async function getPhotosRuntime(folder) {
   const base = import.meta.env.BASE_URL || '/'
   const baseFolder = `${manifest.base}/${folder}/`
-  const existing = getPhotos(folder)
-  const existingUrls = new Set(existing.map((p) => p.full))
-  const result = [...existing]
+  const buildTime = getPhotos(folder)
   const extensions = ['webp', 'jpg', 'jpeg', 'png']
 
   const tryLoad = (url) =>
@@ -144,14 +142,22 @@ export async function getPhotosRuntime(folder) {
       img.src = url
     })
 
+  // 1. Verificar que las del manifest sigan existiendo (por si se borraron)
+  const verified = []
+  for (const p of buildTime) {
+    if (await tryLoad(p.full)) verified.push(p)
+  }
+
+  const existingUrls = new Set(verified.map((p) => p.full))
+  const result = [...verified]
+
   const basename = folder.split('/').pop() || 'foto'
   const candidates = new Set()
-  // Nombres secuenciales
   for (let i = 1; i <= 30; i++) candidates.add(String(i))
-  // Nombre de la carpeta con sufijo
   candidates.add(basename)
   for (let i = 2; i <= 30; i++) candidates.add(`${basename}-${i}`)
 
+  // 2. Sondear nuevas
   for (const name of candidates) {
     let found = false
     for (const ext of extensions) {
@@ -174,21 +180,8 @@ export async function getPhotosRuntime(folder) {
 export async function getHeroImagesRuntime() {
   const base = import.meta.env.BASE_URL || '/'
   const folder = 'img/gallery/hero/'
-  const existing = new Set(getHeroImages())
-  const result = [...existing]
+  const buildTime = getHeroImages()
   const extensions = ['webp', 'jpg', 'jpeg', 'png']
-
-  // Detectar el patron base a partir de los nombres existentes
-  // (ej. "Principal", "Principal-2", "Principal-3", ...)
-  const baseNames = new Set()
-  for (const url of existing) {
-    const file = url.split('/').pop() || ''
-    const stem = file.replace(/\.[^.]+$/, '')
-    // Extraer prefijo: "Principal-2" -> "Principal"
-    const prefix = stem.replace(/-\d+$/, '')
-    baseNames.add(prefix)
-  }
-  if (baseNames.size === 0) baseNames.add('Principal')
 
   const tryLoad = (url) =>
     new Promise((resolve) => {
@@ -198,28 +191,43 @@ export async function getHeroImagesRuntime() {
       img.src = url
     })
 
-  // Para cada prefijo, sondear hasta 5 indices consecutivos (max 5 fotos en carrusel)
+  // 1. Verificar que las del manifest sigan existiendo (por si se borraron)
+  const verified = []
+  for (const url of buildTime) {
+    if (await tryLoad(url)) verified.push(url)
+  }
+
+  const existingAll = new Set(verified)
+  const result = [...verified]
+
+  // Detectar patron base a partir de los verificados
+  const baseNames = new Set()
+  for (const url of verified) {
+    const file = url.split('/').pop() || ''
+    const stem = file.replace(/\.[^.]+$/, '')
+    baseNames.add(stem.replace(/-\d+$/, ''))
+  }
+  if (baseNames.size === 0) baseNames.add('Principal')
+
+  // 2. Sondear nuevas (Principal, Principal-2, ..., Principal-5)
   for (const prefix of baseNames) {
     for (let i = 1; i <= 5; i++) {
       const suffix = i === 1 ? '' : `-${i}`
       let found = false
       for (const ext of extensions) {
         const url = `/${[base, folder, `${prefix}${suffix}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
-        if (existing.has(url)) { found = true; break }
-        // normalizar
         const normalized = url.startsWith('/') ? url : '/' + url
-        if (existing.has(normalized)) { found = true; break }
+        if (existingAll.has(normalized)) { found = true; break }
         const ok = await tryLoad(normalized)
         if (ok) {
-          if (!existing.has(normalized)) {
-            existing.add(normalized)
+          if (!existingAll.has(normalized)) {
+            existingAll.add(normalized)
             result.push(normalized)
           }
           found = true
           break
         }
       }
-      // Si no se encontro este indice, parar (asumimos secuencia continua)
       if (!found && i > 1) break
     }
   }
