@@ -78,7 +78,7 @@ function galleryPlugin() {
 }
 
 export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/JC-STUDIOS/' : '/',
+  base: command === 'build' ? (process.env.VITE_BASE_PATH || '/') : '/',
   plugins: [vue(), galleryPlugin()],
   resolve: {
     alias: {
