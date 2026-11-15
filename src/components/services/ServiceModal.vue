@@ -108,7 +108,7 @@
                 <div class="plan-header">
                   <i :class="getPackageIcon(key)" class="plan-icon"></i>
                   <h4 class="plan-name">{{ pkg.namePaquete }}</h4>
-                  <div class="plan-price">S/. {{ pkg.price }}</div>
+                  <div class="plan-price">S/. {{ pkg.price }} <span v-if="pkg.priceSuffix" class="price-suffix">{{ pkg.priceSuffix }}</span></div>
                 </div>
                 <div class="plan-body">
                   <p class="plan-photos">{{ pkg.photos }}</p>
@@ -312,7 +312,7 @@ function reservar(pkg) {
     '',
     `*Servicio:* ${nombre}`,
     `*Paquete:* ${pkg.namePaquete}`,
-    `*Inversión:* S/. ${pkg.price}`,
+    `*Inversión:* S/. ${pkg.price}${pkg.priceSuffix ? ' ' + pkg.priceSuffix : ''}`,
     conFecha ? `*Fecha tentativa:* ${fechaLarga.value}` : null,
     '',
     'Para cerrar la reserva, por favor indíquenme:',
@@ -629,6 +629,13 @@ defineExpose({ open })
 .plan-basico .plan-price { color: #28a745; }
 .plan-standard .plan-price { color: #e6a800; }
 .plan-premium .plan-price { color: var(--primary-color); }
+
+.price-suffix {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
 
 .plan-body {
   padding: 1rem 1.2rem;

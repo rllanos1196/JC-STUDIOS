@@ -158,6 +158,7 @@ const serviceDefinitions = {
       basico: {
         namePaquete: 'Básico',
         price: 150,
+        priceSuffix: 'por estudiante',
         duration: '',
         photos: 'Fotos editadas',
         features: ['Fotografía de evento con retoque profesional.', 'Video de evento.', 'Entrega 20 días después del evento.'],
@@ -165,6 +166,7 @@ const serviceDefinitions = {
       standard: {
         namePaquete: 'Estándar',
         price: 200,
+        priceSuffix: 'por estudiante',
         duration: '',
         photos: 'Fotos editadas',
         features: [
@@ -178,6 +180,7 @@ const serviceDefinitions = {
       premium: {
         namePaquete: 'Premium',
         price: 350,
+        priceSuffix: 'por estudiante',
         duration: '',
         photos: 'Fotos editadas',
         features: [
@@ -200,9 +203,16 @@ const serviceDefinitions = {
     folder: 'aniversarios',
     hasPackages: true,
     packages: {
+      basico:{
+        namePaquete: 'Básico',
+        price:950,
+        duration:'',
+        photos: 'Fotos editadas',
+        features: ['Fotografía de evento con retoque profesional.', 'Video de evento de 1 hora FULL DH.',],
+      },
       standard: {
         namePaquete: 'Estándar',
-        price: 300,
+        price: 1300,
         duration: '',
         photos: '15 fotos editadas',
         features: [
@@ -213,7 +223,7 @@ const serviceDefinitions = {
       },
       premium: {
         namePaquete: 'Premium',
-        price: 400,
+        price: 1600,
         duration: '',
         photos: '20 fotos editadas',
         features: [
@@ -428,7 +438,7 @@ const serviceDefinitions = {
       },
       premium: {
         namePaquete: 'Premium',
-        price: 480,
+        price: 380,
         duration: '',
         photos: '20 fotos editadas',
         features: [
