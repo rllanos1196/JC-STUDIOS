@@ -35,10 +35,10 @@
           class="service-card"
           @click="openService(service)"
         >
-          <div class="service-card-image" :class="{ 'is-empty': !service.cover }">
+          <div class="service-card-image" :class="{ 'is-empty': !getCover(service) }">
             <img
-              v-if="service.cover"
-              :src="service.cover"
+              v-if="getCover(service)"
+              :src="getCover(service)"
               :alt="service.name"
               loading="lazy"
               decoding="async"
@@ -70,8 +70,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useServicesStore } from '@/stores/services.js'
+import { getPhotosRuntime } from '@/services/galleryLoader.js'
 import ServiceModal from './ServiceModal.vue'
 
 const store = useServicesStore()
@@ -79,6 +80,13 @@ const serviceModalRef = ref(null)
 
 const activeCategory = computed(() => store.activeCategory)
 const activeServices = computed(() => store.activeServices)
+
+// Covers runtime (se actualizan al detectar fotos nuevas)
+const runtimeCovers = ref({})
+
+function getCover(service) {
+  return runtimeCovers.value[service.key] || service.cover
+}
 
 function onImgError(e) {
   e.target.parentElement?.classList.add('is-empty')
@@ -90,6 +98,31 @@ function openService(service) {
     serviceModalRef.value.open(service)
   }
 }
+
+// Detectar covers en runtime (primera foto de cada carpeta)
+async function loadCovers() {
+  for (const svc of store.activeServices) {
+    const dir = svc.category === 'evento' ? 'eventos' : 'sesiones'
+    const folder = svc.folder
+    if (!folder) continue
+    try {
+      const photos = await getPhotosRuntime(`${dir}/${folder}`)
+      if (photos.length > 0) {
+        runtimeCovers.value[svc.key] = photos[0].thumb
+      }
+    } catch (_) {}
+  }
+}
+
+onMounted(() => {
+  loadCovers()
+})
+
+// Recargar covers al cambiar de categoria
+import { watch } from 'vue'
+watch(activeCategory, () => {
+  loadCovers()
+})
 </script>
 
 <style scoped>
