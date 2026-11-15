@@ -247,8 +247,9 @@ function open(serviceData) {
   const folder = serviceData?.folder
   if (folder) {
     getPhotosRuntime(`${dir}/${folder}`).then((extra) => {
-      console.log('RUNTIME PHOTOS:', extra?.length, 'vs', runtimePhotos.value?.length, extra)
-      if (extra && extra.length > (runtimePhotos.value?.length ?? 0)) {
+      const current = runtimePhotos.value || []
+      const changed = extra.length !== current.length || extra.some((p, i) => p.full !== current[i]?.full)
+      if (changed) {
         runtimePhotos.value = [...extra]
       }
     }).catch((e) => console.error('PROBE ERROR:', e))

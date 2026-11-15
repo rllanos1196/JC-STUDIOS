@@ -40,9 +40,10 @@ function buildSlidesFromImages(images) {
 export const useHeroStore = defineStore('hero', () => {
   const slides = ref(buildSlidesFromImages(getHeroImages()))
 
-  // Detectar imagenes nuevas subidas despues del build (runtime)
+  // Detectar imagenes nuevas/cambiadas subidas despues del build (runtime)
   getHeroImagesRuntime().then((images) => {
-    if (images.length > slides.value.length) {
+    // Actualizar siempre (renombrados, borrados, nuevos)
+    if (images.length !== slides.value.length || images.some((img, i) => img !== slides.value[i]?.image)) {
       slides.value = buildSlidesFromImages(images)
     }
   }).catch(() => {})

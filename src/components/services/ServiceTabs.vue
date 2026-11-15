@@ -109,6 +109,8 @@ async function loadCovers() {
       const photos = await getPhotosRuntime(`${dir}/${folder}`)
       if (photos.length > 0) {
         runtimeCovers.value[svc.key] = photos[0].thumb
+      } else {
+        delete runtimeCovers.value[svc.key]
       }
     } catch (_) {}
   }
