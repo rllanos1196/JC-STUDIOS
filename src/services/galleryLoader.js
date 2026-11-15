@@ -134,13 +134,15 @@ export async function getPhotosRuntime(folder) {
   const buildTime = getPhotos(folder)
   const extensions = ['webp', 'jpg', 'jpeg', 'png']
 
-  const tryLoad = (url) =>
-    new Promise((resolve) => {
+  const tryLoad = (url) => {
+    const bustUrl = url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now()
+    return new Promise((resolve) => {
       const img = new Image()
       img.onload = () => resolve(true)
       img.onerror = () => resolve(false)
-      img.src = url
+      img.src = bustUrl
     })
+  }
 
   // 1. Verificar que las del manifest sigan existiendo (por si se borraron)
   const verified = []
@@ -192,13 +194,15 @@ export async function getHeroImagesRuntime() {
   const buildTime = getHeroImages()
   const extensions = ['webp', 'jpg', 'jpeg', 'png']
 
-  const tryLoad = (url) =>
-    new Promise((resolve) => {
+  const tryLoad = (url) => {
+    const bustUrl = url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now()
+    return new Promise((resolve) => {
       const img = new Image()
       img.onload = () => resolve(true)
       img.onerror = () => resolve(false)
-      img.src = url
+      img.src = bustUrl
     })
+  }
 
   // 1. Verificar que las del manifest sigan existiendo (por si se borraron)
   const verified = []
