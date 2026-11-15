@@ -9,25 +9,73 @@
  *
  * Convenciones de nombres:
  *   foto.jpg       -> imagen a tamano completo (lightbox)
- *   foto-min.jpg   -> miniatura de esa misma foto (grilla / portada)
- * Si solo existe una de las dos, se usa para ambos casos.
+ *   foto-min.jpg   -> miniatura manual (opcional) de esa misma foto
+ * Sin -min, en el servidor api/img.php genera solo la miniatura (600 px) y la
+ * version del visor (2000 px). Los originales nunca se descargan enteros.
  *
  * Portada de cada carpeta: se elige la primera foto segun prioridad
  *   1. el nombre coincide con el de la carpeta   (bodas/bodas.jpg)
  *   2. el nombre empieza por portada/principal/cover/hero
  *   3. orden alfanumerico
  */
-import manifest from 'virtual:gallery'
+import buildManifest from 'virtual:gallery'
 
 const BASE = import.meta.env.BASE_URL || '/'
-// Cache buster: timestamp de carga de pagina (fuerza imagenes frescas al recargar)
-const PAGE_LOAD_TS = Date.now()
 const COVER_HINT = /^(portada|principal|cover|hero|main)/i
 const MIN_SUFFIX = /-min$/i
 
-function buildUrl(folder, file) {
+/**
+ * Manifiesto activo: { base, folders: { 'eventos/bodas': [[archivo, mtime], ...] } }
+ * Arranca con el del build (dev / respaldo) y loadManifest() lo reemplaza por
+ * el que genera api/galeria.php en el servidor, que refleja lo subido por FTP.
+ */
+let manifest = buildManifest
+const photoCache = new Map()
+
+/** Pide el manifiesto vivo al servidor. Si falla (dev sin PHP), queda el del build. */
+export async function loadManifest() {
+  try {
+    const res = await fetch(`${BASE}api/galeria.php`, { cache: 'no-store' })
+    const ct = res.headers.get('content-type') || ''
+    if (!res.ok || !ct.includes('json')) return
+    const data = await res.json()
+    if (data && data.folders) {
+      manifest = data
+      photoCache.clear()
+    }
+  } catch (_) {
+    /* sin servidor PHP: se usa el manifiesto del build */
+  }
+}
+
+function fileName(entry) {
+  return Array.isArray(entry) ? entry[0] : entry
+}
+
+/** Anchos que genera api/img.php: miniatura (grilla/modal) y visor (lightbox/hero). */
+export const THUMB_W = 600
+export const FULL_W = 2000
+/** Carpetas que se sirven siempre en original (logos PNG con transparencia). */
+const NO_RESIZE = ['logos']
+
+/** URL del archivo original, versionada por fecha: cambia solo si cambia el archivo. */
+function buildUrl(folder, entry) {
+  const [file, mtime] = Array.isArray(entry) ? entry : [entry, 0]
   const parts = `${BASE}/${manifest.base}/${folder}/${file}`.split('/').filter(Boolean)
-  return '/' + parts.map((p) => encodeURIComponent(p)).join('/') + '?t=' + PAGE_LOAD_TS
+  const url = '/' + parts.map((p) => encodeURIComponent(p)).join('/')
+  return mtime ? `${url}?v=${mtime}` : url
+}
+
+/**
+ * URL reducida a `width` px via api/img.php (solo con el manifiesto del
+ * servidor; en dev no hay PHP y se usa el original).
+ */
+function sizedUrl(folder, entry, width) {
+  const canResize = manifest.resize && !NO_RESIZE.some((n) => folder === n || folder.startsWith(`${n}/`))
+  if (!canResize) return buildUrl(folder, entry)
+  const [file, mtime] = Array.isArray(entry) ? entry : [entry, 0]
+  const params = new URLSearchParams({ f: `${folder}/${file}`, w: String(width), v: String(mtime) })
+  return `${BASE}api/img.php?${params}`
 }
 
 function stemOf(file) {
@@ -57,23 +105,24 @@ function buildPhotos(folder) {
   if (!files || files.length === 0) return []
 
   const groups = new Map()
-  for (const file of files) {
-    const stem = stemOf(file)
+  for (const entry of files) {
+    const stem = stemOf(fileName(entry))
     const key = stem.replace(MIN_SUFFIX, '')
     if (!groups.has(key)) groups.set(key, { key, full: null, thumb: null })
     const g = groups.get(key)
-    if (MIN_SUFFIX.test(stem)) g.thumb = file
-    else g.full = file
+    if (MIN_SUFFIX.test(stem)) g.thumb = entry
+    else g.full = entry
   }
 
   return [...groups.values()]
     .map((g) => {
       const full = g.full || g.thumb
-      const thumb = g.thumb || g.full
       return {
         key: g.key,
-        full: buildUrl(folder, full),
-        thumb: buildUrl(folder, thumb),
+        full: sizedUrl(folder, full, FULL_W),
+        // Un -min subido a mano se respeta tal cual; si no, se genera.
+        thumb: g.thumb ? buildUrl(folder, g.thumb) : sizedUrl(folder, full, THUMB_W),
+        original: buildUrl(folder, full),
       }
     })
     .sort((a, b) => {
@@ -83,8 +132,6 @@ function buildPhotos(folder) {
       return a.key.localeCompare(b.key, 'es', { numeric: true })
     })
 }
-
-const photoCache = new Map()
 
 /** Fotos de una carpeta, como objetos { key, full, thumb }. */
 export function getPhotos(folder) {
@@ -117,132 +164,6 @@ export function getServiceCover(category, folder) {
 
 export function getHeroImages() {
   return getPhotos('hero').map((p) => p.full).slice(0, 5)
-}
-
-/**
- * Detecta imagenes del hero en tiempo de ejecucion (runtime).
- * Util cuando se suben fotos nuevas a la carpeta despues del build/deploy.
- * Sondea nombres secuenciales (Principal, Principal-2, ..., Principal-N) y
- * extensiones comunes. Devuelve la lista combinada con las del manifest.
- */
-/**
- * Sondea en runtime imagenes adicionales para cualquier carpeta.
- * Util para detectar fotos subidas despues del build/deploy (Hostinger, WinSCP).
- * Prueba nombres secuenciales (1,2,3...) y el nombre de la carpeta con sufijo.
- */
-export async function getPhotosRuntime(folder) {
-  const base = import.meta.env.BASE_URL || '/'
-  const baseFolder = `${manifest.base}/${folder}/`
-  const buildTime = getPhotos(folder)
-
-  const tryLoad = (url) => {
-    const bustUrl = url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now()
-    return new Promise((resolve) => {
-      const img = new Image()
-      img.onload = () => resolve(true)
-      img.onerror = () => resolve(false)
-      img.src = bustUrl
-    })
-  }
-
-  // 1. Verificar que las del manifest sigan existiendo (por si se borraron) - paralelo
-  const verified = (await Promise.all(
-    buildTime.map(async (p) => {
-      if (!(await tryLoad(p.full))) return null
-      return { ...p, full: p.full + '?t=' + PAGE_LOAD_TS, thumb: p.thumb + '?t=' + PAGE_LOAD_TS }
-    })
-  )).filter(Boolean)
-
-  const existingUrls = new Set(verified.map((p) => p.full.split('?')[0]))
-  const result = [...verified]
-
-  const tryName = async (name) => {
-    const url = `/${[base, baseFolder, `${name}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
-    const normalized = url.startsWith('/') ? url : '/' + url
-    if (existingUrls.has(normalized)) return true
-    const ok = await tryLoad(normalized)
-    if (ok) {
-      existingUrls.add(normalized)
-      const vUrl = normalized + '?t=' + PAGE_LOAD_TS
-      result.push({ key: name, full: vUrl, thumb: vUrl })
-      return true
-    }
-    return false
-  }
-
-  // Sondear numeros secuenciales (1, 2, 3, ...) en paralelo - mas rapido
-  const nums = Array.from({ length: 30 }, (_, i) => i + 1)
-  await Promise.all(nums.map(async (i) => {
-    await tryName(String(i))
-  }))
-
-  // Ordenar por nombre (1, 2, 3, ... primero)
-  result.sort((a, b) => {
-    const ka = String(a.key || '')
-    const kb = String(b.key || '')
-    return ka.localeCompare(kb, 'es', { numeric: true })
-  })
-
-  return result
-}
-
-export async function getHeroImagesRuntime() {
-  const base = import.meta.env.BASE_URL || '/'
-  const folder = 'img/gallery/hero/'
-  const buildTime = getHeroImages()
-  const extensions = ['webp']
-
-  const tryLoad = (url) => {
-    const bustUrl = url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now()
-    return new Promise((resolve) => {
-      const img = new Image()
-      img.onload = () => resolve(true)
-      img.onerror = () => resolve(false)
-      img.src = bustUrl
-    })
-  }
-
-  // 1. Verificar que las del manifest sigan existiendo (por si se borraron) - paralelo
-  const verified = (await Promise.all(
-    buildTime.map(async (url) => ((await tryLoad(url)) ? url + '?t=' + PAGE_LOAD_TS : null))
-  )).filter(Boolean)
-
-  const existingAll = new Set(verified.map((u) => u.split('?')[0]))
-  const result = [...verified]
-
-  // Detectar patron base a partir de los verificados
-  const baseNames = new Set()
-  for (const url of verified) {
-    const file = url.split('/').pop() || ''
-    const stem = file.replace(/\.[^.]+$/, '')
-    baseNames.add(stem.replace(/-\d+$/, ''))
-  }
-  if (baseNames.size === 0) baseNames.add('Principal')
-
-  // 2. Sondear nuevas (Principal, Principal-1, ..., Principal-5) en paralelo
-  for (const prefix of baseNames) {
-    const urls = []
-    urls.push(`/${[base, folder, `${prefix}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/'))
-    for (let i = 1; i <= 5; i++) {
-      urls.push(`/${[base, folder, `${prefix}-${i}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/'))
-    }
-    await Promise.all(urls.map(async (url) => {
-      const normalized = url.startsWith('/') ? url : '/' + url
-      if (existingAll.has(normalized)) return
-      const ok = await tryLoad(normalized)
-      if (ok) {
-        existingAll.add(normalized)
-        result.push(normalized + '?t=' + PAGE_LOAD_TS)
-      }
-    }))
-  }
-
-  const sorted = [...new Set(result)].sort((a, b) => {
-    const fa = (a.split('/').pop() || '').replace(/\.[^.]+$/, '')
-    const fb = (b.split('/').pop() || '').replace(/\.[^.]+$/, '')
-    return fa.localeCompare(fb, 'es', { numeric: true })
-  })
-  return sorted.slice(0, 5)
 }
 
 /**
@@ -291,4 +212,4 @@ export function getAllGalleryImages() {
   return result
 }
 
-export default manifest
+export default { get manifest() { return manifest } }

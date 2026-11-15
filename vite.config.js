@@ -31,8 +31,8 @@ function scanGallery(root) {
     }
     const files = entries
       .filter((e) => e.isFile() && IMG_RE.test(e.name) && !e.name.startsWith('.'))
-      .map((e) => e.name)
-      .sort((a, b) => a.localeCompare(b, 'es', { numeric: true }))
+      .map((e) => [e.name, Math.floor(fs.statSync(path.join(abs, e.name)).mtimeMs / 1000)])
+      .sort((a, b) => a[0].localeCompare(b[0], 'es', { numeric: true }))
 
     if (files.length > 0) folders[rel] = files
 

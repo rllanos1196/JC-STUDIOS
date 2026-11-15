@@ -2,14 +2,19 @@
 
 ## Cómo funciona la detección
 
-### En tiempo de build (npm run build)
-Vite escanea `public/img/gallery/` y genera un manifest con TODOS los archivos que existen en ese momento. Esas fotos son las "por defecto".
+### En el servidor (api/galeria.php)
+Al cargar la página, la web pide `/api/galeria.php`, que lista **todas** las fotos que hay en
+`img/gallery/` en ese momento, con su fecha de modificación. Con eso arma las URLs como
+`foto.webp?v=<fecha>`:
+- Foto nueva o reemplazada (aunque tenga el mismo nombre) → cambia la fecha → cambia la URL → se ve al instante.
+- Foto sin cambios → misma URL → el navegador la reutiliza de caché (carga rápida).
+- Foto borrada → deja de aparecer.
 
-### En tiempo de ejecución (runtime)
-Al abrir un modal o cargar la página, el sistema:
-1. Verifica que cada foto del manifest siga existiendo (con cache-busting para evitar caché del navegador)
-2. Sondea nombres adicionales siguiendo los patrones reconocidos
-3. Muestra solo las fotos que realmente existen en el servidor
+Se acepta **cualquier nombre** y los formatos `.webp .jpg .jpeg .png .avif .gif`.
+`api/galeria.php` está fuera de `img/`, así que el acceso FTP del cliente no lo toca.
+
+### En desarrollo (npm run dev)
+Vite no ejecuta PHP: usa el manifiesto que genera al escanear `public/img/gallery/`.
 
 ---
 
@@ -145,39 +150,31 @@ Al abrir un modal o cargar la página, el sistema:
 
 ---
 
-## NOMBRES RECONOCIDOS POR RUNTIME (para fotos nuevas subidas por WinSCP)
+## ORDEN Y PORTADA
 
-Además de las fotos por defecto, el sistema detecta automáticamente fotos con estos nombres:
+Las fotos de cada carpeta se ordenan así (la primera es la portada de la tarjeta):
+1. La que se llama como la carpeta (`bodas/bodas.webp`)
+2. Las que empiezan por `portada`, `principal`, `cover`, `hero` o `main`
+3. El resto en orden alfanumérico (`1, 2, 3 … 10`)
 
-### HERO
-- `Principal.webp`, `Principal-2.webp`, `Principal-3.webp`, `Principal-4.webp`, `Principal-5.webp`
-- (solo `.webp` para detección automática)
+### Tamaños automáticos (api/img.php)
+El cliente sube **una sola foto** (puede ser la original de la cámara). El servidor genera solo:
+- **Miniatura de 600 px** → tarjetas y grilla del modal.
+- **Versión de 2000 px** → visor grande (lightbox) y hero.
 
-### EVENTOS y SESIONES (cualquier subcarpeta)
-**Opción A** - Nombre de la carpeta + número:
-- `bodas.webp`, `bodas-2.webp`, `bodas-3.webp`... (hasta 30)
-- `cumpleanos.webp`, `cumpleanos-2.webp`... (hasta 30)
-- (sustituir por el nombre de la subcarpeta)
+Se generan la primera vez que alguien las ve y quedan guardadas en `public_html/cache/`
+(se puede borrar sin problema: se vuelven a generar). Si se reemplaza la foto, se regeneran.
+Los logos se sirven siempre en original.
 
-**Opción B** - Números secuenciales:
-- `1.webp`, `2.webp`, `3.webp`... (hasta 30)
-- (solo `.webp` para detección automática)
+Opcional: si existe `foto-min.webp` junto a `foto.webp`, se usa esa como miniatura
+(con guion: `1-min.webp`, no `1min.webp`).
 
-### LOGOS
-- Nombres descriptivos: `jcstudios.png`, `jcstudiosblanco.png`, `jcstudios-dorado.png`, etc.
-- Números secuenciales: `1.png`, `2.png`, `3.png`... (hasta 30)
+Recomendado igual: subir fotos de máximo ~3000 px para que el FTP sea más rápido.
 
----
+El hero muestra como máximo 5 fotos de `img/gallery/hero/`.
 
-## RESUMEN: QUÉ PASA CUANDO BORRAS UNA FOTO
+## SI UNA FOTO NO SE ACTUALIZA
 
-1. El sistema verifica al cargar la página si cada foto del manifest sigue existiendo
-2. Si una foto fue borrada, el servidor devuelve 404 y la foto se **filtra automáticamente**
-3. Las fotos nuevas que siguen los patrones de nombres se **detectan automáticamente**
-4. No necesitas rebuild ni redeploy
-
-## SI UNA FOTO BORRADA SIGUE MOSTRÁNDOSE
-
-- Limpia la caché del navegador (Ctrl+Shift+R o ventana incógnita)
-- Verifica que el archivo realmente no exista en el File Manager de Hostinger
-- Si el `.htaccess` tiene caché agresivo, el navegador puede servir la imagen vieja desde caché
+- Abre `https://jcstudiosperu.com/api/galeria.php` y verifica que la foto aparezca con su fecha nueva.
+- Si no aparece: el archivo no quedó en la carpeta correcta (revisa la ruta en WinSCP).
+- Si aparece pero la web no cambia: recarga la página (no hace falta borrar caché).

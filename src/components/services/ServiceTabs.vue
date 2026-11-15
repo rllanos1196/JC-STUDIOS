@@ -70,9 +70,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useServicesStore } from '@/stores/services.js'
-import { getPhotosRuntime } from '@/services/galleryLoader.js'
 import ServiceModal from './ServiceModal.vue'
 
 const store = useServicesStore()
@@ -81,11 +80,9 @@ const serviceModalRef = ref(null)
 const activeCategory = computed(() => store.activeCategory)
 const activeServices = computed(() => store.activeServices)
 
-// Covers runtime (se actualizan al detectar fotos nuevas)
-const runtimeCovers = ref({})
-
+// Portada: primera foto de la carpeta segun el manifiesto vivo (api/galeria.php)
 function getCover(service) {
-  return runtimeCovers.value[service.key] || service.cover
+  return service.cover
 }
 
 function onImgError(e) {
@@ -99,32 +96,6 @@ function openService(service) {
   }
 }
 
-// Detectar covers en runtime (primera foto de cada carpeta)
-async function loadCovers() {
-  for (const svc of store.activeServices) {
-    const dir = svc.category === 'evento' ? 'eventos' : 'sesiones'
-    const folder = svc.folder
-    if (!folder) continue
-    try {
-      const photos = await getPhotosRuntime(`${dir}/${folder}`)
-      if (photos.length > 0) {
-        runtimeCovers.value[svc.key] = photos[0].thumb
-      } else {
-        delete runtimeCovers.value[svc.key]
-      }
-    } catch (_) {}
-  }
-}
-
-onMounted(() => {
-  loadCovers()
-})
-
-// Recargar covers al cambiar de categoria
-import { watch } from 'vue'
-watch(activeCategory, () => {
-  loadCovers()
-})
 </script>
 
 <style scoped>

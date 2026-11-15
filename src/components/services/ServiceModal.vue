@@ -200,11 +200,8 @@ const fechaLarga = computed(() => {
   return texto.charAt(0).toUpperCase() + texto.slice(1)
 })
 
-import { getPhotosRuntime } from '@/services/galleryLoader.js'
-
 /** Fotos { key, full, thumb } del servicio abierto. */
-const runtimePhotos = ref(null)
-const photos = computed(() => runtimePhotos.value ?? service.value?.gallery ?? [])
+const photos = computed(() => service.value?.gallery ?? [])
 
 /** Si una imagen no carga, marcamos el contenedor para no mostrar el icono roto. */
 function onImgError(e) {
@@ -234,33 +231,18 @@ function getPackageIcon(key) {
 
 function open(serviceData) {
   service.value = serviceData
-  runtimePhotos.value = serviceData?.gallery ? [...serviceData.gallery] : null
   step.value = 'gallery'
   fechaTentativa.value = ''
   if (!bsModal) {
     bsModal = new bootstrap.Modal(modalRef.value)
   }
   bsModal.show()
-
-  // Detectar fotos nuevas subidas despues del build (runtime)
-  const dir = serviceData?.category === 'evento' ? 'eventos' : 'sesiones'
-  const folder = serviceData?.folder
-  if (folder) {
-    getPhotosRuntime(`${dir}/${folder}`).then((extra) => {
-      const current = runtimePhotos.value || []
-      const changed = extra.length !== current.length || extra.some((p, i) => p.full !== current[i]?.full)
-      if (changed) {
-        runtimePhotos.value = [...extra]
-      }
-    }).catch((e) => console.error('PROBE ERROR:', e))
-  }
 }
 
 function resetState() {
   step.value = 'gallery'
   lightboxOpen.value = false
   fechaTentativa.value = ''
-  runtimePhotos.value = null
 }
 
 function openLightbox(index) {
