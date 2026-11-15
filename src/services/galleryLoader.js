@@ -144,11 +144,10 @@ export async function getPhotosRuntime(folder) {
     })
   }
 
-  // 1. Verificar que las del manifest sigan existiendo (por si se borraron)
-  const verified = []
-  for (const p of buildTime) {
-    if (await tryLoad(p.full)) verified.push(p)
-  }
+  // 1. Verificar que las del manifest sigan existiendo (por si se borraron) - paralelo
+  const verified = (await Promise.all(
+    buildTime.map(async (p) => ((await tryLoad(p.full)) ? p : null))
+  )).filter(Boolean)
 
   const existingUrls = new Set(verified.map((p) => p.full))
   const result = [...verified]
@@ -156,16 +155,23 @@ export async function getPhotosRuntime(folder) {
   const basename = folder.split('/').pop() || 'foto'
 
   const tryName = async (name) => {
-    for (const ext of extensions) {
-      const url = `/${[base, baseFolder, `${name}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
-      const normalized = url.startsWith('/') ? url : '/' + url
-      if (existingUrls.has(normalized)) return true
-      const ok = await tryLoad(normalized)
-      if (ok) {
-        existingUrls.add(normalized)
-        result.push({ key: name, full: normalized, thumb: normalized })
-        return true
+    // Probar todas las extensiones en paralelo
+    const results = await Promise.all(
+      extensions.map(async (ext) => {
+        const url = `/${[base, baseFolder, `${name}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
+        const normalized = url.startsWith('/') ? url : '/' + url
+        if (existingUrls.has(normalized)) return { found: true, url: normalized }
+        const ok = await tryLoad(normalized)
+        return ok ? { found: true, url: normalized } : { found: false, url: normalized }
+      })
+    )
+    const hit = results.find((r) => r.found)
+    if (hit) {
+      if (!existingUrls.has(hit.url)) {
+        existingUrls.add(hit.url)
+        result.push({ key: name, full: hit.url, thumb: hit.url })
       }
+      return true
     }
     return false
   }
@@ -204,11 +210,10 @@ export async function getHeroImagesRuntime() {
     })
   }
 
-  // 1. Verificar que las del manifest sigan existiendo (por si se borraron)
-  const verified = []
-  for (const url of buildTime) {
-    if (await tryLoad(url)) verified.push(url)
-  }
+  // 1. Verificar que las del manifest sigan existiendo (por si se borraron) - paralelo
+  const verified = (await Promise.all(
+    buildTime.map(async (url) => ((await tryLoad(url)) ? url : null))
+  )).filter(Boolean)
 
   const existingAll = new Set(verified)
   const result = [...verified]
@@ -222,24 +227,27 @@ export async function getHeroImagesRuntime() {
   }
   if (baseNames.size === 0) baseNames.add('Principal')
 
-  // 2. Sondear nuevas (Principal, Principal-2, ..., Principal-5)
+  // 2. Sondear nuevas (Principal, Principal-2, ..., Principal-5) - paralelo
   for (const prefix of baseNames) {
     for (let i = 1; i <= 5; i++) {
       const suffix = i === 1 ? '' : `-${i}`
+      const results = await Promise.all(
+        extensions.map(async (ext) => {
+          const url = `/${[base, folder, `${prefix}${suffix}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
+          const normalized = url.startsWith('/') ? url : '/' + url
+          if (existingAll.has(normalized)) return { found: true, url: normalized }
+          const ok = await tryLoad(normalized)
+          return ok ? { found: true, url: normalized } : { found: false, url: normalized }
+        })
+      )
+      const hit = results.find((r) => r.found)
       let found = false
-      for (const ext of extensions) {
-        const url = `/${[base, folder, `${prefix}${suffix}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
-        const normalized = url.startsWith('/') ? url : '/' + url
-        if (existingAll.has(normalized)) { found = true; break }
-        const ok = await tryLoad(normalized)
-        if (ok) {
-          if (!existingAll.has(normalized)) {
-            existingAll.add(normalized)
-            result.push(normalized)
-          }
-          found = true
-          break
+      if (hit) {
+        if (!existingAll.has(hit.url)) {
+          existingAll.add(hit.url)
+          result.push(hit.url)
         }
+        found = true
       }
       if (!found && i > 1) break
     }
