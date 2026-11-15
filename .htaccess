@@ -1,4 +1,7 @@
 <IfModule mod_headers.c>
+  <FilesMatch "\.(webp|jpg|jpeg|png)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
   <FilesMatch "index\.html$">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
