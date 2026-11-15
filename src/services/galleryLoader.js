@@ -132,7 +132,7 @@ export async function getPhotosRuntime(folder) {
   const base = import.meta.env.BASE_URL || '/'
   const baseFolder = `${manifest.base}/${folder}/`
   const buildTime = getPhotos(folder)
-  const extensions = ['webp', 'jpg', 'jpeg', 'png']
+  const extensions = ['webp']
 
   const tryLoad = (url) => {
     const bustUrl = url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now()
@@ -198,7 +198,7 @@ export async function getHeroImagesRuntime() {
   const base = import.meta.env.BASE_URL || '/'
   const folder = 'img/gallery/hero/'
   const buildTime = getHeroImages()
-  const extensions = ['webp', 'jpg', 'jpeg', 'png']
+  const extensions = ['webp']
 
   const tryLoad = (url) => {
     const bustUrl = url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now()

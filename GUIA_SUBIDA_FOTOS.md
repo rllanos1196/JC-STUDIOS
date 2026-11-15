@@ -151,7 +151,7 @@ Además de las fotos por defecto, el sistema detecta automáticamente fotos con 
 
 ### HERO
 - `Principal.webp`, `Principal-2.webp`, `Principal-3.webp`, `Principal-4.webp`, `Principal-5.webp`
-- (también `.jpg`, `.jpeg`, `.png`)
+- (solo `.webp` para detección automática)
 
 ### EVENTOS y SESIONES (cualquier subcarpeta)
 **Opción A** - Nombre de la carpeta + número:
@@ -161,7 +161,7 @@ Además de las fotos por defecto, el sistema detecta automáticamente fotos con 
 
 **Opción B** - Números secuenciales:
 - `1.webp`, `2.webp`, `3.webp`... (hasta 30)
-- (también `.jpg`, `.jpeg`, `.png`)
+- (solo `.webp` para detección automática)
 
 ### LOGOS
 - Nombres descriptivos: `jcstudios.png`, `jcstudiosblanco.png`, `jcstudios-dorado.png`, etc.
