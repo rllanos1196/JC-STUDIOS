@@ -1,322 +1,183 @@
-# GUÍA DE SUBIDA DE FOTOS - JC STUDIOS
+# FOTOS POR DEFECTO Y NOMBRES RECONOCIDOS - JC STUDIOS
 
-Esta guía explica cómo nombrar y subir fotos a las carpetas de galería para que se muestren automáticamente en la página web (sin necesidad de recompilar).
+## Cómo funciona la detección
 
----
+### En tiempo de build (npm run build)
+Vite escanea `public/img/gallery/` y genera un manifest con TODOS los archivos que existen en ese momento. Esas fotos son las "por defecto".
 
-## LOGOS
-**Carpeta**: `img/gallery/logos/`
-
-Los logos se buscan por nombre. Nombres reconocidos actualmente:
-- `jcstudios` → logo principal
-- `jcstudiosblanco` → logo blanco
-- `jc-studios-blanco` → logo blanco (variante)
-- `jc-studios-png-dorado` → logo dorado
-
-**Para agregar un nuevo logo**, nómbralo de forma descriptiva:
-```
-jcstudios.png
-jcstudiosblanco.png
-jcstudios-dorado.png
-jcstudios-negro.png
-```
-
-**Patrón alternativo** (números secuenciales):
-```
-1.png
-2.png
-3.png
-... (hasta 30)
-```
-
-Extensiones: `.webp`, `.jpg`, `.jpeg`, `.png`
-
-**Nota**: Los logos NO se detectan automáticamente por nombre arbitrario en runtime. Si agregas un logo con un nombre nuevo, necesitas rebuild + redeploy para que se registre. Los números secuenciales sí se detectan automáticamente.
+### En tiempo de ejecución (runtime)
+Al abrir un modal o cargar la página, el sistema:
+1. Verifica que cada foto del manifest siga existiendo (con cache-busting para evitar caché del navegador)
+2. Sondea nombres adicionales siguiendo los patrones reconocidos
+3. Muestra solo las fotos que realmente existen en el servidor
 
 ---
 
-## ESTRUCTURA DE CARPETAS EN EL SERVIDOR
+## FOTOS POR DEFECTO (build-time) POR CARPETA
 
-```
-public_html/
-└── img/
-    └── gallery/
-        ├── hero/                          ← Portadas del carrusel principal
-        ├── eventos/
-        │   ├── aniversarios/
-        │   ├── bautizos/
-        │   ├── bodas/
-        │   ├── corporativos/
-        │   ├── graduaciones/
-        │   └── quinceaneros/
-        └── sesiones/
-            ├── artistica/
-            ├── cumpleanos/
-            ├── grupal/
-            ├── individual/
-            ├── mascotas/
-            └── maternidad/
-```
+### HERO (`img/gallery/hero/`)
+| Archivo | Detectado |
+|---|---|
+| `Principal.webp` | ✅ |
+| `Principal-2.webp` | ✅ |
+| `Principal-3.webp` | ✅ |
+| `Principal-4.webp` | ✅ |
 
----
-
-## FORMATO DE NOMBRES POR CARPETA
-
-### HERO (Portadas del carrusel)
-**Carpeta**: `img/gallery/hero/`
-
-```
-Principal.webp
-Principal-2.webp
-Principal-3.webp
-Principal-4.webp
-Principal-5.webp          ← máximo 5 fotos
-```
-Extensiones: `.webp`, `.jpg`, `.jpeg`, `.png`
-
----
+**Máximo: 5 fotos**
 
 ### EVENTOS
 
-#### Aniversarios
-**Carpeta**: `img/gallery/eventos/aniversarios/`
+#### Aniversarios (`img/gallery/eventos/aniversarios/`)
+| Archivo | Detectado |
+|---|---|
+| `aniversarios-min.jpg` | ✅ (miniatura) |
+| `bodas-min.jpg` | ✅ (miniatura) |
+| `img-4231.jpg` | ✅ |
 
-```
-aniversarios.webp
-aniversarios-2.webp
-aniversarios-3.webp
-... (hasta aniversarios-30)
-```
-**O también** (números secuenciales):
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
+#### Bautizos (`img/gallery/eventos/bautizos/`)
+| Archivo | Detectado |
+|---|---|
+| `Bautizo.jpg` | ✅ |
+| `portada3.jpg` | ✅ |
+| `trabajo12-min.jpg` | ✅ (miniatura) |
+| `trabajo12.jpg` | ✅ |
+| `trabajo9-min.jpg` | ✅ (miniatura) |
+| `trabajo9.jpg` | ✅ |
 
-#### Bautizos
-**Carpeta**: `img/gallery/eventos/bautizos/`
+#### Bodas (`img/gallery/eventos/bodas/`)
+| Archivo | Detectado |
+|---|---|
+| `BODAS.jpg` | ✅ |
+| `principal.jpg` | ✅ |
+| `trabajo5-min.jpg` | ✅ (miniatura) |
+| `trabajo5.jpg` | ✅ |
 
-```
-bautizos.webp
-bautizos-2.webp
-bautizos-3.webp
-... (hasta bautizos-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
+#### Corporativos (`img/gallery/eventos/corporativos/`)
+| Archivo | Detectado |
+|---|---|
+| `corporativos-min.jpg` | ✅ (miniatura) |
+| `corporativos.jpg` | ✅ |
+| `sesion-artistica-min.jpg` | ✅ (miniatura) |
+| `trabajo2-min.jpg` | ✅ (miniatura) |
+| `trabajo2.jpg` | ✅ |
 
-#### Bodas
-**Carpeta**: `img/gallery/eventos/bodas/`
+#### Graduaciones (`img/gallery/eventos/graduaciones/`)
+| Archivo | Detectado |
+|---|---|
+| `corporativos.jpg` | ✅ |
+| `graduaciones-min.jpg` | ✅ (miniatura) |
+| `trabajo2.jpg` | ✅ |
 
-```
-bodas.webp
-bodas-2.webp
-bodas-3.webp
-... (hasta bodas-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
-
-#### Corporativos
-**Carpeta**: `img/gallery/eventos/corporativos/`
-
-```
-corporativos.webp
-corporativos-2.webp
-corporativos-3.webp
-... (hasta corporativos-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
-
-#### Graduaciones
-**Carpeta**: `img/gallery/eventos/graduaciones/`
-
-```
-graduaciones.webp
-graduaciones-2.webp
-graduaciones-3.webp
-... (hasta graduaciones-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
-
-#### Quinceañeros
-**Carpeta**: `img/gallery/eventos/quinceaneros/`
-
-```
-quinceaneros.webp
-quinceaneros-2.webp
-quinceaneros-3.webp
-... (hasta quinceaneros-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
-
----
+#### Quinceañeros (`img/gallery/eventos/quinceaneros/`)
+| Archivo | Detectado |
+|---|---|
+| `GRADUACIONES.jpg` | ✅ |
+| `quinceaneros.jpg` | ✅ |
+| `trabajo6-min.jpg` | ✅ (miniatura) |
+| `trabajo6.jpg` | ✅ |
 
 ### SESIONES
 
-#### Artística
-**Carpeta**: `img/gallery/sesiones/artistica/`
+#### Artística (`img/gallery/sesiones/artistica/`)
+| Archivo | Detectado |
+|---|---|
+| `principal.jpg` | ✅ |
+| `quinceaneros-min.jpg` | ✅ (miniatura) |
+| `trabajo5-min.jpg` | ✅ (miniatura) |
+| `trabajo5.jpg` | ✅ |
 
-```
-artistica.webp
-artistica-2.webp
-artistica-3.webp
-... (hasta artistica-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
+#### Cumpleaños (`img/gallery/sesiones/cumpleanos/`)
+| Archivo | Detectado |
+|---|---|
+| `sesion-cumpleanos-min.jpg` | ✅ (miniatura) |
+| `sesion-cumpleanos.jpg` | ✅ |
+| `trabajo1-min.jpg` | ✅ (miniatura) |
+| `trabajo1.jpg` | ✅ |
 
-#### Cumpleaños
-**Carpeta**: `img/gallery/sesiones/cumpleanos/`
+#### Grupal (`img/gallery/sesiones/grupal/`)
+| Archivo | Detectado |
+|---|---|
+| `1.jpg` | ✅ |
+| `2.jpg` | ✅ |
+| `3.jpg` | ✅ |
+| `4.jpg` | ✅ |
+| `5.jpg` | ✅ |
+| `6.jpg` | ✅ |
+| `7.jpg` | ✅ |
+| `8.jpg` | ✅ |
 
-```
-cumpleanos.webp
-cumpleanos-2.webp
-cumpleanos-3.webp
-... (hasta cumpleanos-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
+#### Individual (`img/gallery/sesiones/individual/`)
+| Archivo | Detectado |
+|---|---|
+| `sesion-individual-min.jpg` | ✅ (miniatura) |
+| `sesion-individual.jpg` | ✅ |
+| `trabajo10-min.jpg` | ✅ (miniatura) |
+| `trabajo10.jpg` | ✅ |
+| `trabajo11-min.jpg` | ✅ (miniatura) |
+| `trabajo11.jpg` | ✅ |
+| `trabajo8-min.jpg` | ✅ (miniatura) |
+| `trabajo8.jpg` | ✅ |
 
-#### Grupal
-**Carpeta**: `img/gallery/sesiones/grupal/`
+#### Mascotas (`img/gallery/sesiones/mascotas/`)
+| Archivo | Detectado |
+|---|---|
+| `sesion-artistica-min.jpg` | ✅ (miniatura) |
+| `trabajo2-min.jpg` | ✅ (miniatura) |
+| `trabajo2.jpg` | ✅ |
 
-```
-grupal.webp
-grupal-2.webp
-grupal-3.webp
-... (hasta grupal-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
+#### Maternidad (`img/gallery/sesiones/maternidad/`)
+| Archivo | Detectado |
+|---|---|
+| `sesion-maternidad-min.jpg` | ✅ (miniatura) |
+| `sesion-maternidad.jpg` | ✅ |
+| `trabajo4-min.jpg` | ✅ (miniatura) |
+| `trabajo4.jpg` | ✅ |
+| `trabajo7-min.jpg` | ✅ (miniatura) |
+| `trabajo7.jpg` | ✅ |
 
-#### Individual
-**Carpeta**: `img/gallery/sesiones/individual/`
-
-```
-individual.webp
-individual-2.webp
-individual-3.webp
-... (hasta individual-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
-
-#### Mascotas
-**Carpeta**: `img/gallery/sesiones/mascotas/`
-
-```
-mascotas.webp
-mascotas-2.webp
-mascotas-3.webp
-... (hasta mascotas-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
-
-#### Maternidad
-**Carpeta**: `img/gallery/sesiones/maternidad/`
-
-```
-maternidad.webp
-maternidad-2.webp
-maternidad-3.webp
-... (hasta maternidad-30)
-```
-**O también**:
-```
-1.webp
-2.webp
-3.webp
-... (hasta 30)
-```
+### LOGOS (`img/gallery/logos/`)
+| Archivo | Detectado |
+|---|---|
+| `jc-studios-blanco.png` | ✅ |
+| `jc-studios-png-dorado.png` | ✅ |
+| `jcstudios.png` | ✅ |
+| `jcstudiosblanco.png` | ✅ |
 
 ---
 
-## REGLAS GENERALES
+## NOMBRES RECONOCIDOS POR RUNTIME (para fotos nuevas subidas por WinSCP)
 
-1. **Extensiones aceptadas**: `.webp`, `.jpg`, `.jpeg`, `.png`
-2. **Límite**: Hasta 30 fotos por carpeta (excepto hero: máximo 5)
-3. **Sin espacios**: No uses espacios en los nombres. Usa guiones (`-`).
-4. **Minúsculas**: Usa nombres en minúsculas para mayor compatibilidad.
-5. **Sin acentos**: Evita acentos (á, é, í, ó, ú, ñ). Ej: `quinceaneros` (sin ñ), `cumpleanos` (sin ñ).
-6. **Sin rebuild**: Las fotos con estos nombres se detectan automáticamente al cargar la página. No necesitas recompilar ni redesplegar.
-7. **Caché**: Si no ves la foto nueva, limpia la caché del navegador (Ctrl+Shift+R o Cmd+Shift+R).
+Además de las fotos por defecto, el sistema detecta automáticamente fotos con estos nombres:
 
----
+### HERO
+- `Principal.webp`, `Principal-2.webp`, `Principal-3.webp`, `Principal-4.webp`, `Principal-5.webp`
+- (también `.jpg`, `.jpeg`, `.png`)
 
-## EJEMPLO PRÁCTICO
+### EVENTOS y SESIONES (cualquier subcarpeta)
+**Opción A** - Nombre de la carpeta + número:
+- `bodas.webp`, `bodas-2.webp`, `bodas-3.webp`... (hasta 30)
+- `cumpleanos.webp`, `cumpleanos-2.webp`... (hasta 30)
+- (sustituir por el nombre de la subcarpeta)
 
-Si quieres agregar 3 fotos nuevas de una boda:
+**Opción B** - Números secuenciales:
+- `1.webp`, `2.webp`, `3.webp`... (hasta 30)
+- (también `.jpg`, `.jpeg`, `.png`)
 
-1. Nombra los archivos:
-   - `bodas-6.webp`
-   - `bodas-7.webp`
-   - `bodas-8.webp`
-
-2. Súbelos por WinSCP a: `img/gallery/eventos/bodas/`
-
-3. Recarga la página → las fotos aparecen automáticamente.
+### LOGOS
+- Nombres descriptivos: `jcstudios.png`, `jcstudiosblanco.png`, `jcstudios-dorado.png`, etc.
+- Números secuenciales: `1.png`, `2.png`, `3.png`... (hasta 30)
 
 ---
 
-## NOTA SOBRE NOMBRES ARBITRARIOS
+## RESUMEN: QUÉ PASA CUANDO BORRAS UNA FOTO
 
-Si subes una foto con un nombre que **no** sigue estos patrones (ej: `foto-boda-ana.jpg`), **no** se detectará automáticamente. En ese caso, necesitas:
-1. Renombrar el archivo siguiendo el patrón, **o**
-2. Hacer rebuild + redeploy del proyecto.
+1. El sistema verifica al cargar la página si cada foto del manifest sigue existiendo
+2. Si una foto fue borrada, el servidor devuelve 404 y la foto se **filtra automáticamente**
+3. Las fotos nuevas que siguen los patrones de nombres se **detectan automáticamente**
+4. No necesitas rebuild ni redeploy
+
+## SI UNA FOTO BORRADA SIGUE MOSTRÁNDOSE
+
+- Limpia la caché del navegador (Ctrl+Shift+R o ventana incógnita)
+- Verifica que el archivo realmente no exista en el File Manager de Hostinger
+- Si el `.htaccess` tiene caché agresivo, el navegador puede servir la imagen vieja desde caché
