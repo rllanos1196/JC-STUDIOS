@@ -170,10 +170,16 @@ export async function getPhotosRuntime(folder) {
     return false
   }
 
-  // Sondear numeros secuenciales (1, 2, 3, ...) - parar al primer gap
+  // Sondear numeros secuenciales (1, 2, 3, ...) - permite huecos, para despues de 5 fallos consecutivos
+  let consecutiveMisses = 0
   for (let i = 1; i <= 30; i++) {
     const found = await tryName(String(i))
-    if (!found && i > 1) break
+    if (found) {
+      consecutiveMisses = 0
+    } else {
+      consecutiveMisses++
+      if (consecutiveMisses >= 5) break
+    }
   }
 
   return result
