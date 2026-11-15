@@ -225,23 +225,28 @@ export async function getHeroImagesRuntime() {
   }
   if (baseNames.size === 0) baseNames.add('Principal')
 
-  // 2. Sondear nuevas (Principal, Principal-2, ..., Principal-5)
+  // 2. Sondear nuevas (Principal, Principal-1, Principal-2, ..., Principal-5)
   for (const prefix of baseNames) {
-    for (let i = 1; i <= 5; i++) {
-      const suffix = i === 1 ? '' : `-${i}`
-      const url = `/${[base, folder, `${prefix}${suffix}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
-      const normalized = url.startsWith('/') ? url : '/' + url
-      let found = false
-      if (existingAll.has(normalized)) { found = true }
-      else {
-        const ok = await tryLoad(normalized)
-        if (ok) {
-          existingAll.add(normalized)
-          result.push(normalized + '?v=' + CACHE_VERSION)
-          found = true
-        }
+    // Principal (sin numero) = slot 1
+    const noSuffixUrl = `/${[base, folder, `${prefix}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
+    const noSuffixNorm = noSuffixUrl.startsWith('/') ? noSuffixUrl : '/' + noSuffixUrl
+    if (!existingAll.has(noSuffixNorm)) {
+      const ok = await tryLoad(noSuffixNorm)
+      if (ok) {
+        existingAll.add(noSuffixNorm)
+        result.push(noSuffixNorm + '?v=' + CACHE_VERSION)
       }
-      if (!found && i > 1) break
+    }
+    // Principal-1, Principal-2, ..., Principal-5
+    for (let i = 1; i <= 5; i++) {
+      const url = `/${[base, folder, `${prefix}-${i}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
+      const normalized = url.startsWith('/') ? url : '/' + url
+      if (existingAll.has(normalized)) continue
+      const ok = await tryLoad(normalized)
+      if (ok) {
+        existingAll.add(normalized)
+        result.push(normalized + '?v=' + CACHE_VERSION)
+      }
     }
   }
 
