@@ -132,7 +132,6 @@ export async function getPhotosRuntime(folder) {
   const base = import.meta.env.BASE_URL || '/'
   const baseFolder = `${manifest.base}/${folder}/`
   const buildTime = getPhotos(folder)
-  const extensions = ['webp']
 
   const tryLoad = (url) => {
     const bustUrl = url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now()
@@ -152,43 +151,23 @@ export async function getPhotosRuntime(folder) {
   const existingUrls = new Set(verified.map((p) => p.full))
   const result = [...verified]
 
-  const basename = folder.split('/').pop() || 'foto'
-
   const tryName = async (name) => {
-    // Probar todas las extensiones en paralelo
-    const results = await Promise.all(
-      extensions.map(async (ext) => {
-        const url = `/${[base, baseFolder, `${name}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
-        const normalized = url.startsWith('/') ? url : '/' + url
-        if (existingUrls.has(normalized)) return { found: true, url: normalized }
-        const ok = await tryLoad(normalized)
-        return ok ? { found: true, url: normalized } : { found: false, url: normalized }
-      })
-    )
-    const hit = results.find((r) => r.found)
-    if (hit) {
-      if (!existingUrls.has(hit.url)) {
-        existingUrls.add(hit.url)
-        result.push({ key: name, full: hit.url, thumb: hit.url })
-      }
+    const url = `/${[base, baseFolder, `${name}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
+    const normalized = url.startsWith('/') ? url : '/' + url
+    if (existingUrls.has(normalized)) return true
+    const ok = await tryLoad(normalized)
+    if (ok) {
+      existingUrls.add(normalized)
+      result.push({ key: name, full: normalized, thumb: normalized })
       return true
     }
     return false
   }
 
-  // 2a. Sondear numeros secuenciales (1, 2, 3, ...) - parar al primer gap
+  // Sondear numeros secuenciales (1, 2, 3, ...) - parar al primer gap
   for (let i = 1; i <= 30; i++) {
     const found = await tryName(String(i))
     if (!found && i > 1) break
-  }
-
-  // 2b. Sondear nombre de carpeta con sufijo (bodas, bodas-2, ...) - parar al primer gap
-  const foundBase = await tryName(basename)
-  if (foundBase) {
-    for (let i = 2; i <= 30; i++) {
-      const found = await tryName(`${basename}-${i}`)
-      if (!found) break
-    }
   }
 
   return result
@@ -227,27 +206,21 @@ export async function getHeroImagesRuntime() {
   }
   if (baseNames.size === 0) baseNames.add('Principal')
 
-  // 2. Sondear nuevas (Principal, Principal-2, ..., Principal-5) - paralelo
+  // 2. Sondear nuevas (Principal, Principal-2, ..., Principal-5)
   for (const prefix of baseNames) {
     for (let i = 1; i <= 5; i++) {
       const suffix = i === 1 ? '' : `-${i}`
-      const results = await Promise.all(
-        extensions.map(async (ext) => {
-          const url = `/${[base, folder, `${prefix}${suffix}.${ext}`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
-          const normalized = url.startsWith('/') ? url : '/' + url
-          if (existingAll.has(normalized)) return { found: true, url: normalized }
-          const ok = await tryLoad(normalized)
-          return ok ? { found: true, url: normalized } : { found: false, url: normalized }
-        })
-      )
-      const hit = results.find((r) => r.found)
+      const url = `/${[base, folder, `${prefix}${suffix}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
+      const normalized = url.startsWith('/') ? url : '/' + url
       let found = false
-      if (hit) {
-        if (!existingAll.has(hit.url)) {
-          existingAll.add(hit.url)
-          result.push(hit.url)
+      if (existingAll.has(normalized)) { found = true }
+      else {
+        const ok = await tryLoad(normalized)
+        if (ok) {
+          existingAll.add(normalized)
+          result.push(normalized)
+          found = true
         }
-        found = true
       }
       if (!found && i > 1) break
     }
