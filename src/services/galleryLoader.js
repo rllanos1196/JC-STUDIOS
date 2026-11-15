@@ -170,17 +170,11 @@ export async function getPhotosRuntime(folder) {
     return false
   }
 
-  // Sondear numeros secuenciales (1, 2, 3, ...) - permite huecos, para despues de 5 fallos consecutivos
-  let consecutiveMisses = 0
-  for (let i = 1; i <= 30; i++) {
-    const found = await tryName(String(i))
-    if (found) {
-      consecutiveMisses = 0
-    } else {
-      consecutiveMisses++
-      if (consecutiveMisses >= 5) break
-    }
-  }
+  // Sondear numeros secuenciales (1, 2, 3, ...) en paralelo - mas rapido
+  const nums = Array.from({ length: 30 }, (_, i) => i + 1)
+  await Promise.all(nums.map(async (i) => {
+    await tryName(String(i))
+  }))
 
   // Ordenar por nombre (1, 2, 3, ... primero)
   result.sort((a, b) => {
@@ -225,29 +219,22 @@ export async function getHeroImagesRuntime() {
   }
   if (baseNames.size === 0) baseNames.add('Principal')
 
-  // 2. Sondear nuevas (Principal, Principal-1, Principal-2, ..., Principal-5)
+  // 2. Sondear nuevas (Principal, Principal-1, ..., Principal-5) en paralelo
   for (const prefix of baseNames) {
-    // Principal (sin numero) = slot 1
-    const noSuffixUrl = `/${[base, folder, `${prefix}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
-    const noSuffixNorm = noSuffixUrl.startsWith('/') ? noSuffixUrl : '/' + noSuffixUrl
-    if (!existingAll.has(noSuffixNorm)) {
-      const ok = await tryLoad(noSuffixNorm)
-      if (ok) {
-        existingAll.add(noSuffixNorm)
-        result.push(noSuffixNorm + '?v=' + CACHE_VERSION)
-      }
-    }
-    // Principal-1, Principal-2, ..., Principal-5
+    const urls = []
+    urls.push(`/${[base, folder, `${prefix}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/'))
     for (let i = 1; i <= 5; i++) {
-      const url = `/${[base, folder, `${prefix}-${i}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/')
+      urls.push(`/${[base, folder, `${prefix}-${i}.webp`].join('').replace(/\/+/g, '/')}`.replace(/^\/\//, '/'))
+    }
+    await Promise.all(urls.map(async (url) => {
       const normalized = url.startsWith('/') ? url : '/' + url
-      if (existingAll.has(normalized)) continue
+      if (existingAll.has(normalized)) return
       const ok = await tryLoad(normalized)
       if (ok) {
         existingAll.add(normalized)
         result.push(normalized + '?v=' + CACHE_VERSION)
       }
-    }
+    }))
   }
 
   const sorted = [...new Set(result)].sort((a, b) => {
