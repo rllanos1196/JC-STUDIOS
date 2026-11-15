@@ -20,14 +20,14 @@
 import manifest from 'virtual:gallery'
 
 const BASE = import.meta.env.BASE_URL || '/'
-// Version de cache: incrementar cuando se suban/borren fotos y no se reflejen en la pagina
-const CACHE_VERSION = '1'
+// Cache buster: timestamp de carga de pagina (fuerza imagenes frescas al recargar)
+const PAGE_LOAD_TS = Date.now()
 const COVER_HINT = /^(portada|principal|cover|hero|main)/i
 const MIN_SUFFIX = /-min$/i
 
 function buildUrl(folder, file) {
   const parts = `${BASE}/${manifest.base}/${folder}/${file}`.split('/').filter(Boolean)
-  return '/' + parts.map((p) => encodeURIComponent(p)).join('/') + '?v=' + CACHE_VERSION
+  return '/' + parts.map((p) => encodeURIComponent(p)).join('/') + '?t=' + PAGE_LOAD_TS
 }
 
 function stemOf(file) {
@@ -149,7 +149,7 @@ export async function getPhotosRuntime(folder) {
   const verified = (await Promise.all(
     buildTime.map(async (p) => {
       if (!(await tryLoad(p.full))) return null
-      return { ...p, full: p.full + '?v=' + CACHE_VERSION, thumb: p.thumb + '?v=' + CACHE_VERSION }
+      return { ...p, full: p.full + '?t=' + PAGE_LOAD_TS, thumb: p.thumb + '?t=' + PAGE_LOAD_TS }
     })
   )).filter(Boolean)
 
@@ -163,7 +163,7 @@ export async function getPhotosRuntime(folder) {
     const ok = await tryLoad(normalized)
     if (ok) {
       existingUrls.add(normalized)
-      const vUrl = normalized + '?v=' + CACHE_VERSION
+      const vUrl = normalized + '?t=' + PAGE_LOAD_TS
       result.push({ key: name, full: vUrl, thumb: vUrl })
       return true
     }
@@ -204,7 +204,7 @@ export async function getHeroImagesRuntime() {
 
   // 1. Verificar que las del manifest sigan existiendo (por si se borraron) - paralelo
   const verified = (await Promise.all(
-    buildTime.map(async (url) => ((await tryLoad(url)) ? url + '?v=' + CACHE_VERSION : null))
+    buildTime.map(async (url) => ((await tryLoad(url)) ? url + '?t=' + PAGE_LOAD_TS : null))
   )).filter(Boolean)
 
   const existingAll = new Set(verified.map((u) => u.split('?')[0]))
@@ -232,7 +232,7 @@ export async function getHeroImagesRuntime() {
       const ok = await tryLoad(normalized)
       if (ok) {
         existingAll.add(normalized)
-        result.push(normalized + '?v=' + CACHE_VERSION)
+        result.push(normalized + '?t=' + PAGE_LOAD_TS)
       }
     }))
   }
