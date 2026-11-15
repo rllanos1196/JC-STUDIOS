@@ -182,6 +182,13 @@ export async function getPhotosRuntime(folder) {
     }
   }
 
+  // Ordenar por nombre (1, 2, 3, ... primero)
+  result.sort((a, b) => {
+    const ka = String(a.key || '')
+    const kb = String(b.key || '')
+    return ka.localeCompare(kb, 'es', { numeric: true })
+  })
+
   return result
 }
 
@@ -238,7 +245,12 @@ export async function getHeroImagesRuntime() {
     }
   }
 
-  return [...new Set(result)].slice(0, 5)
+  const sorted = [...new Set(result)].sort((a, b) => {
+    const fa = (a.split('/').pop() || '').replace(/\.[^.]+$/, '')
+    const fb = (b.split('/').pop() || '').replace(/\.[^.]+$/, '')
+    return fa.localeCompare(fb, 'es', { numeric: true })
+  })
+  return sorted.slice(0, 5)
 }
 
 /**
