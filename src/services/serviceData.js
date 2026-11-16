@@ -195,7 +195,7 @@ const serviceDefinitions = {
     },
   },
   aniversarios: {
-    name: 'Aniversarios',
+    name: 'Cumpleaños',
     icon: 'fas fa-heart',
     category: 'evento',
     description:
