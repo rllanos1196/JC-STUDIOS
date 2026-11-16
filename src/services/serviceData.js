@@ -24,14 +24,14 @@ const serviceDefinitions = {
         namePaquete: 'Básico',
         price: 1200,
         duration: '',
-        photos: 'Fotos con edición',
+        photos: 'Fotos con retoque profesional',
         features: ['Fotografía de evento.', 'Video de evento 1 hora en Full HD'],
       },
       standard: {
         namePaquete: 'Estándar',
         price: 2000,
         duration: '',
-        photos: '15 fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión Pre - Boda, 15 fotografías con retoque profesional.',
           'Fotografía de evento con retoque de color, luces y sombras.',
@@ -43,7 +43,7 @@ const serviceDefinitions = {
         namePaquete: 'Premium',
         price: 3000,
         duration: '',
-        photos: '25 fotos retoque Profesional',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión Pre - Boda, 15 fotografías con retoque profesional.',
           'Fotografía Makeup',
@@ -69,14 +69,14 @@ const serviceDefinitions = {
         namePaquete: 'Básico',
         price: 1200,
         duration: '',
-        photos: 'Fotos con edición',
+        photos: 'Fotos con retoque profesional',
         features: ['Fotografía de evento.', 'Video de evento - 1 hora Full HD.'],
       },
       standard: {
         namePaquete: 'Estándar',
         price: 1950,
         duration: '',
-        photos: '15 fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión Pre - Bautizo, 15 fotografías con retoque profesional.',
           'Fotografía de evento con retoque de color, luces y sombras.',
@@ -88,7 +88,7 @@ const serviceDefinitions = {
         namePaquete: 'Premium',
         price: 2800,
         duration: '',
-        photos: '20 fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión Pre - Bautizo, 20 fotos con retoque profesional.',
           'Fotografía Makeup',
@@ -114,14 +114,14 @@ const serviceDefinitions = {
         namePaquete: 'Básico',
         price: 1200,
         duration: '',
-        photos: 'Fotos con edición',
+        photos: 'Fotos con retoque profesional',
         features: ['Fotografía de evento.', 'Video de evento - 1 hora en Full HD.'],
       },
       standard: {
         namePaquete: 'Estándar',
         price: 1800,
         duration: '',
-        photos: '15 fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión Pre - 15 años, 15 fotografías con retoque profesional.',
           'Fotografía de evento con retoque de color, luces y sombras.',
@@ -133,7 +133,7 @@ const serviceDefinitions = {
         namePaquete: 'Premium',
         price: 2800,
         duration: '',
-        photos: '20 fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión Pre - 15 años, 20 fotografías con retoque profesional.',
           'Fotografía Makeup',
@@ -160,7 +160,7 @@ const serviceDefinitions = {
         price: 150,
         priceSuffix: 'por estudiante',
         duration: '',
-        photos: 'Fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: ['Fotografía de evento con retoque profesional.', 'Video de evento.', 'Entrega 20 días después del evento.'],
       },
       standard: {
@@ -168,7 +168,7 @@ const serviceDefinitions = {
         price: 200,
         priceSuffix: 'por estudiante',
         duration: '',
-        photos: 'Fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión fotográfica con retoque profesional.',
           'Fotografía de evento con retoque de color, luces y sombras.',
@@ -182,7 +182,7 @@ const serviceDefinitions = {
         price: 350,
         priceSuffix: 'por estudiante',
         duration: '',
-        photos: 'Fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión fotográfica con retoque profesional.',
           'Fotografía de evento con retoque de color, luces y sombras.',
@@ -207,14 +207,14 @@ const serviceDefinitions = {
         namePaquete: 'Básico',
         price:950,
         duration:'',
-        photos: 'Fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: ['Fotografía de evento con retoque profesional.', 'Video de evento de 1 hora FULL DH.',],
       },
       standard: {
         namePaquete: 'Estándar',
         price: 1300,
         duration: '',
-        photos: '15 fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión Cumpleaños, 15 fotografías con retoque profesional.',
           'Fotografía de evento con retoque de color, luces y sombras.',
@@ -225,7 +225,7 @@ const serviceDefinitions = {
         namePaquete: 'Premium',
         price: 1600,
         duration: '',
-        photos: '20 fotos editadas',
+        photos: 'Fotos con retoque profesional',
         features: [
           'Sesión Cumpleaños, 20 fotografías con retoque profesional.',
           'Fotografía de evento con retoque de color, luces y sombras.',
