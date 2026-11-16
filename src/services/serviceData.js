@@ -199,7 +199,7 @@ const serviceDefinitions = {
     icon: 'fas fa-glass-cheers',
     category: 'evento',
     description:
-      'Capturamos la esencia de vuestro amor con un enfoque romántico y personalizado. Desde una cena íntima hasta una celebración grandiosa, documentamos cada momento especial.',
+      'Capturamos la alegría de tus celebraciones con un enfoque auténtico y personalizado. Desde una reunión íntima hasta una gran fiesta de aniversario o cumpleaños, documentamos cada momento inolvidable.',
     folder: 'aniversarios',
     hasPackages: true,
     packages: {
