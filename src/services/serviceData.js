@@ -196,7 +196,7 @@ const serviceDefinitions = {
   },
   aniversarios: {
     name: 'Cumpleaños',
-    icon: 'fas fa-heart',
+    icon: 'fas fa-glass-cheers',
     category: 'evento',
     description:
       'Capturamos la esencia de vuestro amor con un enfoque romántico y personalizado. Desde una cena íntima hasta una celebración grandiosa, documentamos cada momento especial.',
